@@ -1,0 +1,237 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+@import "@fontsource-variable/plus-jakarta-sans";
+@import "@fontsource-variable/inter";
+@import "@fontsource/caveat/700.css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+    --font-heading: 'Plus Jakarta Sans Variable', 'Inter Variable', sans-serif;
+    --font-display: 'Plus Jakarta Sans Variable', sans-serif;
+    --font-sans: 'Inter Variable', 'Plus Jakarta Sans Variable', sans-serif;
+
+    /* ELA brand palette — direct tokens (bg-navy, text-amber, …) */
+    --color-navy: var(--navy);
+    --color-navy-800: var(--navy-800);
+    --color-navy-700: var(--navy-700);
+    --color-amber: var(--amber);
+    --color-amber-soft: var(--amber-soft);
+    --color-cream: var(--cream);
+    --color-cream-deep: var(--cream-deep);
+    --color-orange: var(--orange);
+    --color-red: var(--red);
+    --color-blue: var(--blue);
+    --color-purple: var(--purple);
+    --color-flame: var(--flame);
+    --color-green: var(--green);
+    --color-pink: var(--pink);
+
+    /* shadcn semantic bridge */
+    --color-sidebar-ring: var(--sidebar-ring);
+    --color-sidebar-border: var(--sidebar-border);
+    --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+    --color-sidebar-accent: var(--sidebar-accent);
+    --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+    --color-sidebar-primary: var(--sidebar-primary);
+    --color-sidebar-foreground: var(--sidebar-foreground);
+    --color-sidebar: var(--sidebar);
+    --color-chart-5: var(--chart-5);
+    --color-chart-4: var(--chart-4);
+    --color-chart-3: var(--chart-3);
+    --color-chart-2: var(--chart-2);
+    --color-chart-1: var(--chart-1);
+    --color-ring: var(--ring);
+    --color-input: var(--input);
+    --color-border: var(--border);
+    --color-destructive: var(--destructive);
+    --color-accent-foreground: var(--accent-foreground);
+    --color-accent: var(--accent);
+    --color-muted-foreground: var(--muted-foreground);
+    --color-muted: var(--muted);
+    --color-secondary-foreground: var(--secondary-foreground);
+    --color-secondary: var(--secondary);
+    --color-primary-foreground: var(--primary-foreground);
+    --color-primary: var(--primary);
+    --color-popover-foreground: var(--popover-foreground);
+    --color-popover: var(--popover);
+    --color-card-foreground: var(--card-foreground);
+    --color-card: var(--card);
+    --color-foreground: var(--foreground);
+    --color-background: var(--background);
+
+    --radius-sm: calc(var(--radius) - 6px);
+    --radius-md: calc(var(--radius) - 3px);
+    --radius-lg: var(--radius);
+    --radius-xl: calc(var(--radius) + 6px);
+    --radius-2xl: calc(var(--radius) + 12px);
+    --radius-3xl: calc(var(--radius) + 20px);
+    --radius-4xl: calc(var(--radius) + 32px);
+
+    --ease-brand: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+:root {
+    /* ── ELA raw brand values ── */
+    --navy: #0b1321;
+    --navy-800: #111a2c;
+    --navy-700: #1a2540;
+    --amber: #f59e0b;
+    --amber-soft: #fbe6bf;
+    --cream: #fafaf7;
+    --cream-deep: #f4f1e9;
+    --orange: #f79433;
+    --red: #e63946;
+    --blue: #29a8e0;
+    --purple: #4a3f8f;
+    --flame: #f04d1a; /* concept CTA orange — buttons, active nav, accents */
+    --green: #3f9142; /* concept calendar/track green */
+    --pink: #d6357a; /* concept YCDP magenta */
+
+    /* ── shadcn semantic (light-dominant) ── */
+    --background: #fafaf7;
+    --foreground: #0b1321;
+    --card: #ffffff;
+    --card-foreground: #0b1321;
+    --popover: #ffffff;
+    --popover-foreground: #0b1321;
+    --primary: #0b1321;
+    --primary-foreground: #fafaf7;
+    --secondary: #f4f1e9;
+    --secondary-foreground: #0b1321;
+    --muted: #f4f1e9;
+    --muted-foreground: #5b6472;
+    --accent: #f59e0b;
+    --accent-foreground: #0b1321;
+    --destructive: #e63946;
+    --border: #e7e3d8;
+    --input: #e7e3d8;
+    --ring: #f59e0b;
+    --chart-1: #f59e0b;
+    --chart-2: #29a8e0;
+    --chart-3: #f79433;
+    --chart-4: #4a3f8f;
+    --chart-5: #e63946;
+    --radius: 1.125rem; /* 18px — within the 14–22px brief */
+
+    --sidebar: #ffffff;
+    --sidebar-foreground: #0b1321;
+    --sidebar-primary: #0b1321;
+    --sidebar-primary-foreground: #fafaf7;
+    --sidebar-accent: #f4f1e9;
+    --sidebar-accent-foreground: #0b1321;
+    --sidebar-border: #e7e3d8;
+    --sidebar-ring: #f59e0b;
+}
+
+.dark {
+    --background: #0b1321;
+    --foreground: #fafaf7;
+    --card: #111a2c;
+    --card-foreground: #fafaf7;
+    --popover: #111a2c;
+    --popover-foreground: #fafaf7;
+    --primary: #f59e0b;
+    --primary-foreground: #0b1321;
+    --secondary: #1a2540;
+    --secondary-foreground: #fafaf7;
+    --muted: #1a2540;
+    --muted-foreground: #9aa4b6;
+    --accent: #f59e0b;
+    --accent-foreground: #0b1321;
+    --destructive: #e63946;
+    --border: rgba(255, 255, 255, 0.10);
+    --input: rgba(255, 255, 255, 0.14);
+    --ring: #f59e0b;
+    --sidebar: #111a2c;
+    --sidebar-foreground: #fafaf7;
+    --sidebar-primary: #f59e0b;
+    --sidebar-primary-foreground: #0b1321;
+    --sidebar-accent: #1a2540;
+    --sidebar-accent-foreground: #fafaf7;
+    --sidebar-border: rgba(255, 255, 255, 0.10);
+    --sidebar-ring: #f59e0b;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  html {
+    @apply font-sans;
+    scroll-behavior: smooth;
+  }
+  h1, h2, h3, h4, .font-display {
+    font-family: var(--font-display);
+    letter-spacing: -0.02em;
+  }
+}
+
+@layer components {
+  /* Frosted glass chip used on inset heroes */
+  .glass-chip {
+    background: rgba(255, 255, 255, 0.14);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid rgba(255, 255, 255, 0.28);
+  }
+  /* Sticky nav glass */
+  .glass-nav {
+    background: rgba(255, 255, 255, 0.72);
+    backdrop-filter: saturate(180%) blur(18px);
+    -webkit-backdrop-filter: saturate(180%) blur(18px);
+  }
+  /* Small pill badge (left of about strips) */
+  .pill-badge {
+    @apply inline-flex items-center gap-2 rounded-full border border-border bg-white px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.14em] text-muted-foreground;
+  }
+  /* Concept gradient accent words — orange → purple → blue sweep */
+  .gradient-text {
+    background: linear-gradient(92deg, #f04d1a 0%, #b14be0 55%, #4f6ae8 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  /* Warm-orange variant used on shorter accent words */
+  .gradient-text-warm {
+    background: linear-gradient(92deg, #f04d1a 0%, #f59e0b 60%, #c855d8 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  /* Five-pathway rainbow sweep — pipeline section title */
+  .gradient-text-rainbow {
+    background: linear-gradient(92deg, #f47a1f 0%, #41802f 25%, #2456c4 50%, #7a3fc9 75%, #e0186e 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  /* Handwritten script accent (closing statements) */
+  .font-script {
+    font-family: "Caveat", "Snell Roundhand", cursive;
+    letter-spacing: 0;
+  }
+}
+
+@utility text-balance {
+  text-wrap: balance;
+}
+
+/* Respect reduced motion globally as a safety net */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
