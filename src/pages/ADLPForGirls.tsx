@@ -12,7 +12,6 @@ import {
   MapPin,
   MessageSquareText,
   MoonStar,
-  Pizza,
   Rocket,
   Sparkles,
   Trophy,
@@ -71,27 +70,27 @@ const ELIGIBILITY = [
 const JOURNEY: { day: string; title: string; body: string; icon: Icon }[] = [
   {
     day: "Day 1",
-    title: "Arrive & Assemble",
-    body: "Meet your cohort, form your team of four, and get onboarded to your toolkit.",
+    title: "Leadership & Team Formation",
+    body: "Build your leadership foundation, meet your cohort, and form your team of four.",
     icon: UsersRound,
   },
   {
     day: "Day 2",
-    title: "Find the Problem, Ship v1",
-    body: "Validate a real problem and ship your first prototype by nightfall.",
+    title: "Find the Problem",
+    body: "Identify and validate a real problem worth solving.",
     icon: Lightbulb,
   },
   {
     day: "Day 3",
-    title: "Build Sprint",
-    body: "A full day of building, with floor mentors unblocking your team on the spot. Pizza night when the sprint winds down.",
-    icon: Pizza,
+    title: "AI Immersion",
+    body: "Learn Codex and the AI tools your team will use to turn the idea into a product.",
+    icon: BrainCircuit,
   },
   {
     day: "Day 4",
-    title: "Polish & Pitch Prep",
-    body: "Final Build Sprint, pitch training, and deck stress-tests with mentors.",
-    icon: MessageSquareText,
+    title: "Build Sprint",
+    body: "Build, test, and polish your product with floor mentors unblocking your team on the spot.",
+    icon: Laptop,
   },
   {
     day: "Day 5",
@@ -295,7 +294,7 @@ export default function ADLPForGirls() {
                   Every session produces something real.
                 </p>
                 <p className="mt-5 text-[15px] leading-relaxed text-white/65">
-                  By Day 2 your team has a working prototype. By Day 5 you are on stage pitching
+                  By Day 4 your team has a working prototype. By Day 5 you are on stage pitching
                   it.
                 </p>
                 <p className="mt-4 text-[15px] leading-relaxed text-white/65">
