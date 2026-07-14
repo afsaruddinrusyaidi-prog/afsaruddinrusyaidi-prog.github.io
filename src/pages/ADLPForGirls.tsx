@@ -180,14 +180,10 @@ export default function ADLPForGirls() {
                 already here.
               </span>
             </h1>
-            <p className="mt-6 max-w-2xl text-base leading-relaxed text-white/68 sm:text-lg">
-              Malaysian women are among the country&apos;s strongest graduates in tech. This
-              programme turns that potential into founders.
-            </p>
-            <p className="mt-4 max-w-2xl text-base leading-relaxed text-white/88 sm:text-lg">
-              A 5-day, 4-night residential AI startup bootcamp for Malaysian women aged 18 to
-              24. Learn leadership, AI, and business by actually building. Arrive with an idea
-              or none at all. Leave having shipped and pitched a real AI-powered product.
+            <p className="mt-6 max-w-2xl text-base leading-relaxed text-white/78 sm:text-lg">
+              A fully sponsored five-day AI startup bootcamp for Malaysian women aged 18 to 24.
+              Arrive with an idea or none at all. Leave with a working product and a Demo Day
+              pitch.
             </p>
             <div className="mt-8 flex flex-col gap-3 text-sm font-semibold text-white/82 sm:flex-row sm:flex-wrap sm:gap-x-5 sm:gap-y-3">
               <span className="inline-flex items-center gap-2">
