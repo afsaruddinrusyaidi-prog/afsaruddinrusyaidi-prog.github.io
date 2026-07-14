@@ -1,11 +1,9 @@
 import type { ComponentType } from "react"
 import {
   ArrowRight,
-  Bot,
   BrainCircuit,
   CalendarDays,
   Check,
-  Code2,
   ExternalLink,
   GraduationCap,
   HeartHandshake,
@@ -14,39 +12,32 @@ import {
   MapPin,
   MessageSquareText,
   MoonStar,
+  Pizza,
   Rocket,
   Sparkles,
-  Target,
   Trophy,
   UsersRound,
   Wallet,
-  WandSparkles,
 } from "lucide-react"
 import { Reveal } from "@/components/Reveal"
 import { CountUp } from "@/components/CountUp"
 import { SectionPill } from "@/components/SectionPill"
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion"
 
 const REGISTER_URL = "#register"
 
 type Icon = ComponentType<{ className?: string }>
 
 const STATS = [
-  { value: 80, suffix: "", label: "Participants", sub: "Young women from across Malaysia" },
-  { value: 5, suffix: " days", label: "Residential sprint", sub: "Four nights building together" },
-  { value: 20, suffix: "", label: "Teams on Demo Day", sub: "Every team ships and pitches" },
-  { value: 2022, suffix: "", label: "Building leaders since", sub: "Malaysia's women digital leaders" },
+  { value: 80, prefix: "", suffix: "", label: "Selected participants", sub: "By selection only" },
+  { value: 20, prefix: "", suffix: "", label: "Teams", sub: "Four builders per team" },
+  { value: 5, prefix: "", suffix: " days", label: "Residential sprint", sub: "Four nights together" },
+  { value: 12, prefix: "RM", suffix: ",000", label: "Up for grabs", sub: "Shared by top teams" },
 ] as const
 
 const PILLARS: { title: string; body: string; icon: Icon; accent: string }[] = [
   {
     title: "80 women, 5 days.",
-    body: "Eighty participants from universities and colleges across Malaysia, living and building together for five full days.",
+    body: "Live and build together with ambitious women selected from universities across Malaysia.",
     icon: UsersRound,
     accent: "#f4791f",
   },
@@ -58,13 +49,13 @@ const PILLARS: { title: string; body: string; icon: Icon; accent: string }[] = [
   },
   {
     title: "Everyone ships.",
-    body: "Every session produces something tangible. Every team walks out with a working product, not just a concept.",
+    body: "Every team walks out with a working product, not a concept.",
     icon: Rocket,
     accent: "#7a3fc9",
   },
   {
-    title: "Real funding on Demo Day.",
-    body: "Top teams pitch to a live panel for real seed funding to take their idea further.",
+    title: "RM12,000 up for grabs.",
+    body: "Top teams on Demo Day share a prize pool of up to RM12,000.",
     icon: Trophy,
     accent: "#f4791f",
   },
@@ -73,83 +64,51 @@ const PILLARS: { title: string; body: string; icon: Icon; accent: string }[] = [
 const ELIGIBILITY = [
   "Malaysian women aged 18 to 24",
   "Curious about AI, startups, or building things",
-  "No coding experience required — the AI tools let you build without writing code from scratch",
-  "Ready to commit to 5 full days and 4 nights in residence at Perdana Hotel KLCC",
+  "No coding experience required — the AI tools build with you",
+  "Ready for 5 full days and 4 nights in residence",
 ]
 
-const AI_TOOLS: { name: string; description: string; icon: Icon; accent: string }[] = [
-  {
-    name: "Google Gemini API",
-    description: "Build AI features directly into your product.",
-    icon: Bot,
-    accent: "#4285f4",
-  },
-  {
-    name: "Google Antigravity",
-    description: "Move from idea to implementation with agent-powered development.",
-    icon: WandSparkles,
-    accent: "#e0186e",
-  },
-  {
-    name: "Gemini Omni Flash",
-    description: "Prototype fast with multimodal AI.",
-    icon: Sparkles,
-    accent: "#7a3fc9",
-  },
-  {
-    name: "Lovable credits",
-    description: "Turn your idea into a working web app in hours, not months.",
-    icon: Code2,
-    accent: "#f4791f",
-  },
-]
-
-const JOURNEY: { day: string; title: string; body: string; outcome: string; icon: Icon }[] = [
+const JOURNEY: { day: string; title: string; body: string; icon: Icon }[] = [
   {
     day: "Day 1",
     title: "Arrive & Assemble",
-    body: "Check in, meet your cohort, form your team of four, and get onboarded to your AI toolkit.",
-    outcome: "A team name, clear roles, and a shortlist of problems worth solving.",
+    body: "Meet your cohort, form your team of four, and get onboarded to your toolkit.",
     icon: UsersRound,
   },
   {
     day: "Day 2",
-    title: "Find the Problem, Ship the First Version",
-    body: "Validate a problem, train on the AI toolkit, and begin your first Build Sprint.",
-    outcome: "A working first prototype.",
+    title: "Find the Problem, Ship v1",
+    body: "Validate a real problem and ship your first prototype by nightfall.",
     icon: Lightbulb,
   },
   {
     day: "Day 3",
     title: "Build Sprint",
-    body: "Spend a full day building while Emerging Leaders Asia floor mentors unblock your team.",
-    outcome: "A live progress demo to your coach.",
-    icon: Laptop,
+    body: "A full day of building, with floor mentors unblocking your team on the spot. Pizza night when the sprint winds down.",
+    icon: Pizza,
   },
   {
     day: "Day 4",
     title: "Polish & Pitch Prep",
-    body: "Complete the final Build Sprint, train for the pitch, and stress-test your deck with mentors.",
-    outcome: "A sharper product and a Demo Day-ready story.",
+    body: "Final Build Sprint, pitch training, and deck stress-tests with mentors.",
     icon: MessageSquareText,
   },
   {
     day: "Day 5",
     title: "Demo Day",
-    body: "Twenty teams pitch for ten minutes each to a live panel of industry judges.",
-    outcome: "Real seed funding for top teams, followed by graduation.",
+    body: "Twenty teams. Ten minutes each. Live judges. Up to RM12,000 in prizes for the top teams.",
     icon: Trophy,
   },
 ]
 
 const TAKEAWAYS: { title: string; icon: Icon }[] = [
-  { title: "A working AI-powered product built with your team", icon: Rocket },
+  { title: "A working AI product you built with your team", icon: Rocket },
   { title: "A recorded Demo Day pitch for your portfolio", icon: MessageSquareText },
-  { title: "Hands-on skill with professional AI development tools", icon: BrainCircuit },
+  { title: "Leadership and business skills you used, not just heard about", icon: BrainCircuit },
   { title: "A mentor network through Emerging Leaders Asia", icon: HeartHandshake },
-  { title: "A cohort of 79 other ambitious women across Malaysia", icon: UsersRound },
-  { title: "A certificate of completion from Axiata Foundation", icon: GraduationCap },
-  { title: "For top teams, seed funding to keep building", icon: Wallet },
+  { title: "79 other ambitious women in your corner", icon: UsersRound },
+  { title: "A certificate of completion", icon: GraduationCap },
+  { title: "For top teams, a share of up to RM12,000 in prize money", icon: Wallet },
 ]
 
 const LOGISTICS: { label: string; value: string; icon: Icon }[] = [
@@ -157,40 +116,11 @@ const LOGISTICS: { label: string; value: string; icon: Icon }[] = [
   { label: "Venue", value: "Perdana Hotel, Kuala Lumpur City Centre", icon: MapPin },
   {
     label: "Cost",
-    value: "Fully sponsored by Axiata Foundation, including accommodation, meals, and AI tool credits",
+    value: "Fully sponsored, including accommodation, meals, and AI tool access",
     icon: Wallet,
   },
-  { label: "Eligibility", value: "Malaysian women aged 18 to 24", icon: UsersRound },
-  { label: "Cohort size", value: "80 participants, 20 teams", icon: Target },
-  { label: "What to bring", value: "A laptop, a charger, and a problem you care about", icon: Laptop },
-]
-
-const FAQS = [
-  {
-    question: "Do I need to know how to code?",
-    answer:
-      "No. The AI tools provided let you build working products without a computer science background. Teams with mixed skills often perform best.",
-  },
-  {
-    question: "Do I need a startup idea before I apply?",
-    answer:
-      "No. Day 1 and Day 2 are designed to help you find and validate a problem worth solving.",
-  },
-  {
-    question: "Is the programme really free?",
-    answer:
-      "Yes. Axiata Foundation covers accommodation, meals, training, and AI tool credits for all selected participants.",
-  },
-  {
-    question: "Can I apply with friends as a team?",
-    answer:
-      "You apply as an individual. Teams are formed on Day 1 so every team has a balanced mix of skills.",
-  },
-  {
-    question: "What happens after the bootcamp?",
-    answer:
-      "Top teams receive seed funding and continued mentorship through the Emerging Leaders Asia network to develop their product further.",
-  },
+  { label: "Eligibility", value: "Malaysian women aged 18 to 24, by selection", icon: UsersRound },
+  { label: "Bring", value: "A laptop, a charger, and a problem you care about", icon: Laptop },
 ]
 
 function SectionHeading({
@@ -242,25 +172,24 @@ export default function ADLPForGirls() {
               className="h-auto w-full max-w-[310px]"
             />
             <p className="mt-5 text-xs font-bold uppercase tracking-[0.18em] text-white/55 sm:text-sm">
-              Powered by Emerging Leaders Asia{" "}
-              <span className="mx-2 text-[#f4791f]">|</span> Funded by Axiata Foundation
+              Powered by Emerging Leaders Asia
             </p>
             <h1 className="mt-8 max-w-3xl font-display text-4xl font-extrabold leading-[1.02] tracking-tight sm:text-5xl lg:text-[4.4rem]">
-              Malaysia has the women. It is missing the{" "}
+              Malaysia&apos;s next tech founders are{" "}
               <span className="bg-gradient-to-r from-[#f4791f] via-[#e0186e] to-[#9a63e8] bg-clip-text text-transparent">
-                founders.
+                already here.
               </span>
             </h1>
             <p className="mt-6 max-w-2xl text-base leading-relaxed text-white/68 sm:text-lg">
-              Malaysian women outperform in education, yet remain underrepresented as tech
-              founders. ADLP For Girls x Codex 2026 is here to change that.
+              Malaysian women are among the country&apos;s strongest graduates in tech. This
+              programme turns that potential into founders.
             </p>
             <p className="mt-4 max-w-2xl text-base leading-relaxed text-white/88 sm:text-lg">
-              A 5-day, 4-night residential AI startup bootcamp for young Malaysian women aged
-              18 to 24. You arrive with an idea, or none at all. You leave having built and
-              pitched a real AI-powered product.
+              A 5-day, 4-night residential AI startup bootcamp for Malaysian women aged 18 to
+              24. Learn leadership, AI, and business by actually building. Arrive with an idea
+              or none at all. Leave having shipped and pitched a real AI-powered product.
             </p>
-            <div className="mt-8 flex flex-col gap-3 text-sm font-semibold text-white/82 sm:flex-row sm:flex-wrap sm:gap-5">
+            <div className="mt-8 flex flex-col gap-3 text-sm font-semibold text-white/82 sm:flex-row sm:flex-wrap sm:gap-x-5 sm:gap-y-3">
               <span className="inline-flex items-center gap-2">
                 <CalendarDays className="size-4.5 text-[#f4791f]" />
                 10–14 September 2026
@@ -269,12 +198,20 @@ export default function ADLPForGirls() {
                 <MapPin className="size-4.5 text-[#e0186e]" />
                 Perdana Hotel, Kuala Lumpur City Centre
               </span>
+              <span className="inline-flex items-center gap-2">
+                <Wallet className="size-4.5 text-[#9a63e8]" />
+                Fully sponsored
+              </span>
+              <span className="inline-flex items-center gap-2">
+                <Check className="size-4.5 text-[#f4791f]" />
+                By selection only
+              </span>
             </div>
             <a
               href={REGISTER_URL}
               className="mt-9 inline-flex min-h-13 items-center gap-2 rounded-full bg-gradient-to-r from-[#f4791f] via-[#e0186e] to-[#7a3fc9] px-8 text-sm font-bold text-white shadow-[0_18px_45px_-16px_rgba(224,24,110,0.8)] transition-transform duration-300 hover:-translate-y-1"
             >
-              Register now
+              Apply now
               <ArrowRight className="size-4" />
             </a>
           </Reveal>
@@ -298,7 +235,7 @@ export default function ADLPForGirls() {
                     <br />
                     Build with AI.
                     <br />
-                    <span className="text-[#f4791f]">Ship in five days.</span>
+                    <span className="text-[#f4791f]">Pitch it in five days.</span>
                   </p>
                 </div>
                 <div className="mt-12 grid grid-cols-2 gap-3">
@@ -306,7 +243,7 @@ export default function ADLPForGirls() {
                     ["80", "participants"],
                     ["20", "teams"],
                     ["5", "days"],
-                    ["1", "Demo Day"],
+                    ["RM12K", "up for grabs"],
                   ].map(([value, label]) => (
                     <div key={label} className="rounded-2xl border border-white/10 bg-black/15 p-4">
                       <p className="font-display text-2xl font-extrabold">{value}</p>
@@ -333,7 +270,7 @@ export default function ADLPForGirls() {
                 } ${index === 2 ? "sm:border-l-0 sm:border-t lg:border-l lg:border-t-0" : ""}`}
               >
                 <p className="font-display text-3xl font-extrabold text-navy">
-                  <CountUp value={stat.value} suffix={stat.suffix} />
+                  <CountUp value={stat.value} prefix={stat.prefix} suffix={stat.suffix} />
                 </p>
                 <p className="mt-1 text-sm font-bold text-navy">{stat.label}</p>
                 <p className="mt-1 text-xs leading-relaxed text-muted-foreground">{stat.sub}</p>
@@ -344,48 +281,11 @@ export default function ADLPForGirls() {
       </section>
 
       <section className="mx-auto max-w-7xl px-6 py-20 sm:px-8 sm:py-24">
-        <SectionHeading
-          eyebrow="The four pillars"
-          title="Built like a startup residency, not a classroom."
-          body="Five full days are designed around one idea: learning becomes real when you make something that works."
-          centered
-        />
-        <div className="mt-12 grid gap-5 md:grid-cols-2">
-          {PILLARS.map((pillar, index) => {
-            const IconCmp = pillar.icon
-            return (
-              <Reveal key={pillar.title} delay={index * 0.06}>
-                <article className="group h-full rounded-[28px] border border-border bg-white p-7 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl sm:p-8">
-                  <div className="flex items-start justify-between gap-4">
-                    <span
-                      className="inline-flex size-13 items-center justify-center rounded-2xl"
-                      style={{ backgroundColor: `${pillar.accent}16`, color: pillar.accent }}
-                    >
-                      <IconCmp className="size-6" />
-                    </span>
-                    <span className="font-display text-sm font-extrabold text-navy/20">
-                      0{index + 1}
-                    </span>
-                  </div>
-                  <h3 className="mt-7 font-display text-xl font-extrabold text-navy sm:text-2xl">
-                    {pillar.title}
-                  </h3>
-                  <p className="mt-3 text-[15px] leading-relaxed text-muted-foreground">
-                    {pillar.body}
-                  </p>
-                </article>
-              </Reveal>
-            )
-          })}
-        </div>
-      </section>
-
-      <section className="bg-white py-20 sm:py-24">
-        <div className="mx-auto grid max-w-7xl items-center gap-12 px-6 sm:px-8 lg:grid-cols-[0.9fr_1.1fr] lg:gap-20">
+        <div className="grid items-center gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:gap-20">
           <SectionHeading
-            eyebrow="About the programme"
-            title="You learn by building, not by listening."
-            body="The Axiata Digital Leaders Programme (ADLP) For Girls has been building Malaysia's pipeline of young women digital leaders since 2022. In 2026, the programme levels up."
+            eyebrow="The brief"
+            title="Find a real problem. Build with AI. Pitch it in five days."
+            body="This is founder training, not a classroom. You learn leadership by running a team, business by validating a real problem, and AI by shipping with it."
           />
           <Reveal delay={0.1}>
             <div className="relative overflow-hidden rounded-[32px] bg-[#0b1321] p-7 text-white sm:p-10">
@@ -396,16 +296,15 @@ export default function ADLPForGirls() {
               <div className="relative">
                 <Rocket className="size-8 text-[#f4791f]" />
                 <p className="mt-8 font-display text-2xl font-extrabold leading-snug sm:text-3xl">
-                  From a problem worth solving to an AI-powered solution pitched on Demo Day.
+                  Every session produces something real.
                 </p>
                 <p className="mt-5 text-[15px] leading-relaxed text-white/65">
-                  ADLP For Girls x Codex is modelled after the world's leading startup
-                  accelerators and AI residency programmes. Over five days you will form a team,
-                  find a real problem, build a solution, and pitch it to industry judges.
+                  By Day 2 your team has a working prototype. By Day 5 you are on stage pitching
+                  it.
                 </p>
                 <p className="mt-4 text-[15px] leading-relaxed text-white/65">
-                  Emerging Leaders Asia's trained facilitators and industry mentors coach every
-                  team through the build, with funding from Axiata Foundation.
+                  And it is genuinely fun. Five days living in a hotel with 79 other builders,
+                  late-night sprints, pizza night, and a Demo Day you will not forget.
                 </p>
               </div>
             </div>
@@ -413,12 +312,50 @@ export default function ADLPForGirls() {
         </div>
       </section>
 
+      <section className="bg-white py-20 sm:py-24">
+        <div className="mx-auto max-w-7xl px-6 sm:px-8">
+          <SectionHeading
+            eyebrow="The four pillars"
+            title="Built like a founder sprint, not a classroom."
+            centered
+          />
+          <div className="mt-12 grid gap-5 md:grid-cols-2">
+            {PILLARS.map((pillar, index) => {
+              const IconCmp = pillar.icon
+              return (
+                <Reveal key={pillar.title} delay={index * 0.06}>
+                  <article className="group h-full rounded-[28px] border border-border bg-background p-7 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl sm:p-8">
+                    <div className="flex items-start justify-between gap-4">
+                      <span
+                        className="inline-flex size-13 items-center justify-center rounded-2xl"
+                        style={{ backgroundColor: `${pillar.accent}16`, color: pillar.accent }}
+                      >
+                        <IconCmp className="size-6" />
+                      </span>
+                      <span className="font-display text-sm font-extrabold text-navy/20">
+                        0{index + 1}
+                      </span>
+                    </div>
+                    <h3 className="mt-7 font-display text-xl font-extrabold text-navy sm:text-2xl">
+                      {pillar.title}
+                    </h3>
+                    <p className="mt-3 text-[15px] leading-relaxed text-muted-foreground">
+                      {pillar.body}
+                    </p>
+                  </article>
+                </Reveal>
+              )
+            })}
+          </div>
+        </div>
+      </section>
+
       <section className="mx-auto max-w-7xl px-6 py-20 sm:px-8 sm:py-24">
         <div className="grid items-start gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16">
           <SectionHeading
             eyebrow="Who is this for?"
-            title="You do not need to arrive as a founder."
-            body='If you have ever thought "someone should build an app for that," this programme is for you. You are the someone.'
+            title="You do not need to arrive as a founder. That is the point."
+            body='We train you to become one. If you have ever thought "someone should build an app for that," you are the someone.'
           />
           <Reveal delay={0.1}>
             <div className="rounded-[30px] border border-border bg-white p-6 shadow-sm sm:p-8">
@@ -434,6 +371,9 @@ export default function ADLPForGirls() {
                   </li>
                 ))}
               </ul>
+              <p className="mt-7 rounded-2xl bg-[#e0186e]/8 px-5 py-4 text-sm font-bold leading-relaxed text-[#b51259]">
+                Places are limited to 80 and awarded on a selected basis. Apply early.
+              </p>
             </div>
           </Reveal>
         </div>
@@ -444,39 +384,40 @@ export default function ADLPForGirls() {
           <Reveal className="mx-auto max-w-3xl text-center">
             <SectionPill tone="dark">Your AI toolkit</SectionPill>
             <h2 className="mt-5 font-display text-3xl font-extrabold leading-tight sm:text-4xl lg:text-[2.7rem]">
-              Professional tools. Provisioned for free.
+              Codex turns plain English into working code.
             </h2>
             <p className="mt-5 text-base leading-relaxed text-white/62 sm:text-lg">
-              You will be trained on every tool before you use it. By the end of Day 2, you will
-              already have shipped your first prototype.
+              Every team is trained on it before the first Build Sprint, then uses it to take an
+              idea to a working product by Demo Day.
             </p>
           </Reveal>
-          <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-            {AI_TOOLS.map((tool, index) => {
-              const IconCmp = tool.icon
-              return (
-                <Reveal key={tool.name} delay={index * 0.06}>
-                  <article className="h-full rounded-[26px] border border-white/10 bg-white/[0.05] p-6 backdrop-blur-sm">
-                    <span
-                      className="inline-flex size-12 items-center justify-center rounded-2xl"
-                      style={{ backgroundColor: `${tool.accent}22`, color: tool.accent }}
-                    >
-                      <IconCmp className="size-5.5" />
-                    </span>
-                    <h3 className="mt-6 font-display text-lg font-extrabold">{tool.name}</h3>
-                    <p className="mt-3 text-sm leading-relaxed text-white/58">{tool.description}</p>
-                  </article>
-                </Reveal>
-              )
-            })}
-          </div>
+          <Reveal delay={0.08} className="mx-auto mt-12 max-w-2xl">
+            <article className="relative overflow-hidden rounded-[30px] border border-white/12 bg-white/[0.06] p-7 backdrop-blur-sm sm:p-9">
+              <div
+                aria-hidden
+                className="absolute -right-16 -top-16 size-56 rounded-full bg-[#6a86ff]/20 blur-3xl"
+              />
+              <div className="relative flex flex-col items-center text-center sm:flex-row sm:text-left">
+                <span className="inline-flex size-20 shrink-0 items-center justify-center rounded-[24px] bg-white shadow-lg">
+                  <img src="/codex-logo.png" alt="" className="size-12 object-contain" />
+                </span>
+                <div className="mt-6 sm:ml-7 sm:mt-0">
+                  <h3 className="font-display text-2xl font-extrabold">Codex</h3>
+                  <p className="mt-3 text-[15px] leading-relaxed text-white/62">
+                    Build with it from the first sprint through the final Demo Day product.
+                    Provisioned for free for every participant.
+                  </p>
+                </div>
+              </div>
+            </article>
+          </Reveal>
         </div>
       </section>
 
       <section className="mx-auto max-w-7xl px-6 py-20 sm:px-8 sm:py-24">
         <SectionHeading
           eyebrow="Your 5-day journey"
-          title="Five days from cohort to company."
+          title="Five days from team formation to Demo Day."
           body="Draft outline. Final agenda to be confirmed."
           centered
         />
@@ -502,9 +443,6 @@ export default function ADLPForGirls() {
                       </h3>
                       <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
                         {step.body}
-                      </p>
-                      <p className="mt-4 border-l-2 border-[#f4791f] pl-4 text-sm font-semibold leading-relaxed text-navy/76">
-                        {step.outcome}
                       </p>
                     </article>
                     <span
@@ -552,7 +490,7 @@ export default function ADLPForGirls() {
           <SectionHeading
             eyebrow="Logistics"
             title="Everything you need to show up ready."
-            body="Accommodation, meals, training, and AI tool credits are fully sponsored by Axiata Foundation."
+            body="The full residential experience is sponsored, including accommodation, meals, and AI tool access."
           />
           <Reveal delay={0.1}>
             <div className="grid overflow-hidden rounded-[30px] border border-border bg-white sm:grid-cols-2">
@@ -579,68 +517,59 @@ export default function ADLPForGirls() {
       </section>
 
       <section className="bg-white py-20 sm:py-24">
-        <div className="mx-auto grid max-w-7xl items-start gap-12 px-6 sm:px-8 lg:grid-cols-[0.78fr_1.22fr] lg:gap-16">
+        <div className="mx-auto max-w-7xl px-6 sm:px-8">
           <SectionHeading
-            eyebrow="Frequently asked questions"
-            title="Before you apply."
-            body="The essentials about joining ADLP For Girls x Codex 2026."
+            eyebrow="Our co-organisers"
+            title="Codex. Axiata Foundation. Emerging Leaders Asia."
+            centered
           />
-          <Reveal delay={0.1}>
-            <Accordion className="rounded-[28px] border border-border bg-background px-5 sm:px-7">
-              {FAQS.map((faq) => (
-                <AccordionItem key={faq.question} value={faq.question}>
-                  <AccordionTrigger className="py-5 text-base font-bold text-navy hover:no-underline">
-                    {faq.question}
-                  </AccordionTrigger>
-                  <AccordionContent className="pb-5 pr-8 text-[15px] leading-relaxed text-muted-foreground">
-                    {faq.answer}
-                  </AccordionContent>
-                </AccordionItem>
-              ))}
-            </Accordion>
-          </Reveal>
-        </div>
-      </section>
-
-      <section className="mx-auto max-w-7xl px-6 py-20 sm:px-8 sm:py-24">
-        <SectionHeading
-          eyebrow="Our partners"
-          title="Funded by Axiata Foundation. Powered by Emerging Leaders Asia."
-          centered
-        />
-        <div className="mt-12 grid gap-5 md:grid-cols-2">
-          <Reveal>
-            <article className="flex h-full flex-col rounded-[30px] border border-border bg-white p-7 shadow-sm sm:p-9">
-              <img
-                src="/partners/axiata.png"
-                alt="Axiata Foundation"
-                className="h-14 w-auto self-start object-contain"
-              />
-              <h3 className="mt-8 font-display text-2xl font-extrabold text-navy">
-                Axiata Foundation
-              </h3>
-              <p className="mt-3 text-[15px] leading-relaxed text-muted-foreground">
-                Funds the programme as part of its long-running commitment to developing
-                Malaysia's young digital leaders.
-              </p>
-            </article>
-          </Reveal>
-          <Reveal delay={0.08}>
-            <article className="flex h-full flex-col rounded-[30px] border border-border bg-white p-7 shadow-sm sm:p-9">
-              <img
-                src="/ELA-Logo.png"
-                alt="Emerging Leaders Asia"
-                className="h-14 w-auto self-start object-contain"
-              />
-              <h3 className="mt-8 font-display text-2xl font-extrabold text-navy">
-                Emerging Leaders Asia
-              </h3>
-              <p className="mt-3 text-[15px] leading-relaxed text-muted-foreground">
-                Powers the programme with trained co-leads, floor mentors, and industry coaches
-                who guide every team from idea to Demo Day.
-              </p>
-            </article>
-          </Reveal>
+          <div className="mt-12 grid gap-5 md:grid-cols-3">
+            <Reveal>
+              <article className="flex h-full flex-col rounded-[30px] border border-border bg-background p-7 sm:p-8">
+                <span className="inline-flex size-16 items-center justify-center rounded-2xl bg-white shadow-sm">
+                  <img src="/codex-logo.png" alt="Codex" className="size-10 object-contain" />
+                </span>
+                <h3 className="mt-8 font-display text-2xl font-extrabold text-navy">
+                  Codex
+                </h3>
+                <p className="mt-3 text-[15px] leading-relaxed text-muted-foreground">
+                  The AI building toolkit every team learns before the first Build Sprint and
+                  uses through Demo Day.
+                </p>
+              </article>
+            </Reveal>
+            <Reveal delay={0.08}>
+              <article className="flex h-full flex-col rounded-[30px] border border-border bg-background p-7 sm:p-8">
+                <img
+                  src="/partners/axiata.png"
+                  alt="Axiata Foundation"
+                  className="h-14 w-auto self-start object-contain"
+                />
+                <h3 className="mt-8 font-display text-2xl font-extrabold text-navy">
+                  Axiata Foundation
+                </h3>
+                <p className="mt-3 text-[15px] leading-relaxed text-muted-foreground">
+                  Co-organiser of the fully sponsored residential founder experience.
+                </p>
+              </article>
+            </Reveal>
+            <Reveal delay={0.16}>
+              <article className="flex h-full flex-col rounded-[30px] border border-border bg-background p-7 sm:p-8">
+                <img
+                  src="/ELA-Logo.png"
+                  alt="Emerging Leaders Asia"
+                  className="h-14 w-auto self-start object-contain"
+                />
+                <h3 className="mt-8 font-display text-2xl font-extrabold text-navy">
+                  Emerging Leaders Asia
+                </h3>
+                <p className="mt-3 text-[15px] leading-relaxed text-muted-foreground">
+                  Powers the programme with trained co-leads, floor mentors, and industry coaches
+                  who guide every team from idea to Demo Day.
+                </p>
+              </article>
+            </Reveal>
+          </div>
         </div>
       </section>
 
@@ -660,17 +589,18 @@ export default function ADLPForGirls() {
               <h2 className="mt-6 font-display text-4xl font-extrabold leading-tight sm:text-5xl">
                 Eighty places. Five days.{" "}
                 <span className="bg-gradient-to-r from-[#f4791f] via-[#e0186e] to-[#9a63e8] bg-clip-text text-transparent">
-                  One Demo Day.
+                  RM12,000 on the line.
                 </span>
               </h2>
               <p className="mt-6 text-base text-white/62 sm:text-lg">
-                Applications close: <span className="font-bold text-white">to be confirmed</span>
+                Selection is competitive. Applications close:{" "}
+                <span className="font-bold text-white">to be confirmed</span>
               </p>
               <a
                 href={REGISTER_URL}
                 className="mt-8 inline-flex min-h-13 items-center gap-2 rounded-full bg-gradient-to-r from-[#f4791f] via-[#e0186e] to-[#7a3fc9] px-9 text-sm font-bold text-white shadow-[0_18px_45px_-16px_rgba(224,24,110,0.8)] transition-transform duration-300 hover:-translate-y-1"
               >
-                Register now
+                Apply now
                 <ExternalLink className="size-4" />
               </a>
               <p className="mt-6 text-sm text-white/48">
