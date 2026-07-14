@@ -5,12 +5,9 @@ import {
   CalendarDays,
   Check,
   ExternalLink,
-  GraduationCap,
-  HeartHandshake,
   Laptop,
   Lightbulb,
   MapPin,
-  MessageSquareText,
   MoonStar,
   Rocket,
   Sparkles,
@@ -19,19 +16,17 @@ import {
   Wallet,
 } from "lucide-react"
 import { Reveal } from "@/components/Reveal"
-import { CountUp } from "@/components/CountUp"
 import { SectionPill } from "@/components/SectionPill"
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion"
 
 const REGISTER_URL = "#register"
 
 type Icon = ComponentType<{ className?: string }>
-
-const STATS = [
-  { value: 80, prefix: "", suffix: "", label: "Selected participants", sub: "By selection only" },
-  { value: 20, prefix: "", suffix: "", label: "Teams", sub: "Four builders per team" },
-  { value: 5, prefix: "", suffix: " days", label: "Residential sprint", sub: "Four nights together" },
-  { value: 12, prefix: "RM", suffix: ",000", label: "Up for grabs", sub: "Shared by top teams" },
-] as const
 
 const PILLARS: { title: string; body: string; icon: Icon; accent: string }[] = [
   {
@@ -58,13 +53,6 @@ const PILLARS: { title: string; body: string; icon: Icon; accent: string }[] = [
     icon: Trophy,
     accent: "#f4791f",
   },
-]
-
-const ELIGIBILITY = [
-  "Malaysian women aged 18 to 24",
-  "Curious about AI, startups, or building things",
-  "No coding experience required — the AI tools build with you",
-  "Ready for 5 full days and 4 nights in residence",
 ]
 
 const JOURNEY: { day: string; title: string; body: string; icon: Icon }[] = [
@@ -100,16 +88,6 @@ const JOURNEY: { day: string; title: string; body: string; icon: Icon }[] = [
   },
 ]
 
-const TAKEAWAYS: { title: string; icon: Icon }[] = [
-  { title: "A working AI product you built with your team", icon: Rocket },
-  { title: "A recorded Demo Day pitch for your portfolio", icon: MessageSquareText },
-  { title: "Leadership and business skills you used, not just heard about", icon: BrainCircuit },
-  { title: "A mentor network through Emerging Leaders Asia", icon: HeartHandshake },
-  { title: "79 other ambitious women in your corner", icon: UsersRound },
-  { title: "A certificate of completion", icon: GraduationCap },
-  { title: "For top teams, a share of up to RM12,000 in prize money", icon: Wallet },
-]
-
 const LOGISTICS: { label: string; value: string; icon: Icon }[] = [
   { label: "Dates", value: "10 to 14 September 2026 (5 days, 4 nights)", icon: CalendarDays },
   { label: "Venue", value: "Perdana Hotel, Kuala Lumpur City Centre", icon: MapPin },
@@ -120,6 +98,19 @@ const LOGISTICS: { label: string; value: string; icon: Icon }[] = [
   },
   { label: "Eligibility", value: "Malaysian women aged 18 to 24, by selection", icon: UsersRound },
   { label: "Bring", value: "A laptop, a charger, and a problem you care about", icon: Laptop },
+]
+
+const FAQS = [
+  {
+    question: "Who can apply?",
+    answer:
+      "Malaysian women aged 18 to 24 who are curious about AI, startups, or building things, and can commit to all 5 days and 4 nights. Places are limited to 80 and awarded by selection.",
+  },
+  {
+    question: "Do I need coding experience or a startup idea?",
+    answer:
+      "No. You can arrive with an idea or none at all, and no coding experience is required. Codex helps your team turn plain English into a working product.",
+  },
 ]
 
 function SectionHeading({
@@ -254,27 +245,6 @@ export default function ADLPForGirls() {
         </div>
       </section>
 
-      <section className="relative z-10 mx-auto -mt-8 max-w-7xl px-6 sm:px-8">
-        <Reveal>
-          <div className="grid overflow-hidden rounded-[30px] border border-border bg-white shadow-[0_24px_70px_-34px_rgba(11,19,33,0.38)] sm:grid-cols-2 lg:grid-cols-4">
-            {STATS.map((stat, index) => (
-              <div
-                key={stat.label}
-                className={`px-7 py-7 ${
-                  index > 0 ? "border-t border-border sm:border-l sm:border-t-0" : ""
-                } ${index === 2 ? "sm:border-l-0 sm:border-t lg:border-l lg:border-t-0" : ""}`}
-              >
-                <p className="font-display text-3xl font-extrabold text-navy">
-                  <CountUp value={stat.value} prefix={stat.prefix} suffix={stat.suffix} />
-                </p>
-                <p className="mt-1 text-sm font-bold text-navy">{stat.label}</p>
-                <p className="mt-1 text-xs leading-relaxed text-muted-foreground">{stat.sub}</p>
-              </div>
-            ))}
-          </div>
-        </Reveal>
-      </section>
-
       <section className="mx-auto max-w-7xl px-6 py-20 sm:px-8 sm:py-24">
         <div className="grid items-center gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:gap-20">
           <SectionHeading
@@ -342,35 +312,6 @@ export default function ADLPForGirls() {
               )
             })}
           </div>
-        </div>
-      </section>
-
-      <section className="mx-auto max-w-7xl px-6 py-20 sm:px-8 sm:py-24">
-        <div className="grid items-start gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16">
-          <SectionHeading
-            eyebrow="Who is this for?"
-            title="You do not need to arrive as a founder. That is the point."
-            body='We train you to become one. If you have ever thought "someone should build an app for that," you are the someone.'
-          />
-          <Reveal delay={0.1}>
-            <div className="rounded-[30px] border border-border bg-white p-6 shadow-sm sm:p-8">
-              <ul className="space-y-4">
-                {ELIGIBILITY.map((item) => (
-                  <li key={item} className="flex items-start gap-4">
-                    <span className="mt-0.5 inline-flex size-7 shrink-0 items-center justify-center rounded-full bg-[#e0186e]/10 text-[#e0186e]">
-                      <Check className="size-4" />
-                    </span>
-                    <span className="text-[15px] font-medium leading-relaxed text-navy/78">
-                      {item}
-                    </span>
-                  </li>
-                ))}
-              </ul>
-              <p className="mt-7 rounded-2xl bg-[#e0186e]/8 px-5 py-4 text-sm font-bold leading-relaxed text-[#b51259]">
-                Places are limited to 80 and awarded on a selected basis. Apply early.
-              </p>
-            </div>
-          </Reveal>
         </div>
       </section>
 
@@ -455,31 +396,6 @@ export default function ADLPForGirls() {
         </div>
       </section>
 
-      <section className="bg-white py-20 sm:py-24">
-        <div className="mx-auto max-w-7xl px-6 sm:px-8">
-          <SectionHeading
-            eyebrow="What you walk away with"
-            title="A portfolio, a network, and proof that you can ship."
-            centered
-          />
-          <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {TAKEAWAYS.map((item, index) => {
-              const IconCmp = item.icon
-              return (
-                <Reveal key={item.title} delay={(index % 3) * 0.05}>
-                  <div className="flex h-full items-start gap-4 rounded-[24px] border border-border bg-background p-5">
-                    <span className="inline-flex size-10 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-[#f4791f]/15 via-[#e0186e]/15 to-[#7a3fc9]/15 text-[#7a3fc9]">
-                      <IconCmp className="size-4.5" />
-                    </span>
-                    <p className="pt-1 text-sm font-bold leading-relaxed text-navy/82">{item.title}</p>
-                  </div>
-                </Reveal>
-              )
-            })}
-          </div>
-        </div>
-      </section>
-
       <section className="mx-auto max-w-7xl px-6 py-20 sm:px-8 sm:py-24">
         <div className="grid items-start gap-12 lg:grid-cols-[0.72fr_1.28fr] lg:gap-16">
           <SectionHeading
@@ -507,6 +423,30 @@ export default function ADLPForGirls() {
                 )
               })}
             </div>
+          </Reveal>
+        </div>
+      </section>
+
+      <section className="bg-white py-20 sm:py-24">
+        <div className="mx-auto grid max-w-7xl items-start gap-12 px-6 sm:px-8 lg:grid-cols-[0.78fr_1.22fr] lg:gap-16">
+          <SectionHeading
+            eyebrow="FAQ"
+            title="Before you apply."
+            body="The two essentials about eligibility and experience."
+          />
+          <Reveal delay={0.1}>
+            <Accordion className="rounded-[28px] border border-border bg-background px-5 sm:px-7">
+              {FAQS.map((faq) => (
+                <AccordionItem key={faq.question} value={faq.question}>
+                  <AccordionTrigger className="py-5 text-base font-bold text-navy hover:no-underline">
+                    {faq.question}
+                  </AccordionTrigger>
+                  <AccordionContent className="pb-5 pr-8 text-[15px] leading-relaxed text-muted-foreground">
+                    {faq.answer}
+                  </AccordionContent>
+                </AccordionItem>
+              ))}
+            </Accordion>
           </Reveal>
         </div>
       </section>
