@@ -165,9 +165,9 @@ export default function ADLPForGirls() {
               Powered by Emerging Leaders Asia
             </p>
             <h1 className="mt-8 max-w-3xl font-display text-4xl font-extrabold leading-[1.02] tracking-tight sm:text-5xl lg:text-[4.4rem]">
-              Malaysia&apos;s next tech founders are{" "}
+              ADLP for Girls x{" "}
               <span className="bg-gradient-to-r from-[#f4791f] via-[#e0186e] to-[#9a63e8] bg-clip-text text-transparent">
-                already here.
+                Codex 2026
               </span>
             </h1>
             <p className="mt-6 max-w-2xl text-base leading-relaxed text-white/78 sm:text-lg">
