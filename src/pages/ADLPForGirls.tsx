@@ -23,7 +23,8 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion"
 
-const REGISTER_URL = "#register"
+const REGISTER_URL =
+  "https://candidate.axiata.talentpulse.accendo.com.my/invitation/journey/?journey_unique_token=Ih46s9Psk0eqCZvZvnhDCZmQcNyIdwW4"
 
 type Icon = ComponentType<{ className?: string }>
 
@@ -216,6 +217,8 @@ export default function ADLPForGirls() {
             </p>
             <a
               href={REGISTER_URL}
+              target="_blank"
+              rel="noopener noreferrer"
               className="mt-9 inline-flex min-h-13 items-center gap-2 rounded-full bg-gradient-to-r from-[#f4791f] via-[#e0186e] to-[#7a3fc9] px-8 text-sm font-bold text-white shadow-[0_18px_45px_-16px_rgba(224,24,110,0.8)] transition-transform duration-300 hover:-translate-y-1"
             >
               Apply now
@@ -571,6 +574,8 @@ export default function ADLPForGirls() {
               </p>
               <a
                 href={REGISTER_URL}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="mt-8 inline-flex min-h-13 items-center gap-2 rounded-full bg-gradient-to-r from-[#f4791f] via-[#e0186e] to-[#7a3fc9] px-9 text-sm font-bold text-white shadow-[0_18px_45px_-16px_rgba(224,24,110,0.8)] transition-transform duration-300 hover:-translate-y-1"
               >
                 Apply now
