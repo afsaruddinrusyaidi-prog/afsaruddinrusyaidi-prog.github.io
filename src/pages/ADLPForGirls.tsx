@@ -25,6 +25,7 @@ import {
 
 const REGISTER_URL =
   "https://candidate.axiata.talentpulse.accendo.com.my/invitation/journey/?journey_unique_token=Ih46s9Psk0eqCZvZvnhDCZmQcNyIdwW4"
+const CODEX_LOGO_URL = "/codex-logo.png?v=3383f8aa"
 
 type Icon = ComponentType<{ className?: string }>
 
@@ -379,7 +380,7 @@ export default function ADLPForGirls() {
               />
               <div className="relative flex flex-col items-center text-center sm:flex-row sm:text-left">
                 <img
-                  src="/codex-logo.png"
+                  src={CODEX_LOGO_URL}
                   alt=""
                   width={640}
                   height={640}
@@ -508,7 +509,7 @@ export default function ADLPForGirls() {
             <Reveal>
               <article className="flex h-full flex-col rounded-[30px] border border-border bg-background p-7 sm:p-8">
                 <img
-                  src="/codex-logo.png"
+                  src={CODEX_LOGO_URL}
                   alt="Codex"
                   width={640}
                   height={640}
