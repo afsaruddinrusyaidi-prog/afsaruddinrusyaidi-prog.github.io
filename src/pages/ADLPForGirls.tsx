@@ -378,9 +378,13 @@ export default function ADLPForGirls() {
                 className="absolute -right-16 -top-16 size-56 rounded-full bg-[#6a86ff]/20 blur-3xl"
               />
               <div className="relative flex flex-col items-center text-center sm:flex-row sm:text-left">
-                <span className="inline-flex size-20 shrink-0 items-center justify-center rounded-[24px] bg-white shadow-lg">
-                  <img src="/codex-logo.png" alt="" className="size-12 object-contain" />
-                </span>
+                <img
+                  src="/codex-logo.png"
+                  alt=""
+                  width={640}
+                  height={640}
+                  className="size-24 shrink-0 rounded-[28px] object-contain shadow-lg"
+                />
                 <div className="mt-6 sm:ml-7 sm:mt-0">
                   <h3 className="font-display text-2xl font-extrabold">Codex</h3>
                   <p className="mt-3 text-[15px] leading-relaxed text-white/62">
@@ -503,9 +507,13 @@ export default function ADLPForGirls() {
           <div className="mt-12 grid gap-5 md:grid-cols-3">
             <Reveal>
               <article className="flex h-full flex-col rounded-[30px] border border-border bg-background p-7 sm:p-8">
-                <span className="inline-flex size-16 items-center justify-center rounded-2xl bg-white shadow-sm">
-                  <img src="/codex-logo.png" alt="Codex" className="size-10 object-contain" />
-                </span>
+                <img
+                  src="/codex-logo.png"
+                  alt="Codex"
+                  width={640}
+                  height={640}
+                  className="size-20 rounded-[24px] object-contain shadow-sm"
+                />
                 <h3 className="mt-8 font-display text-2xl font-extrabold text-navy">
                   Codex
                 </h3>
