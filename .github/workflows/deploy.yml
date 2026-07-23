@@ -1,0 +1,135 @@
+name: Deploy
+
+# Every push to main goes live on emergingleadersasia.com and refreshes the
+# GitHub Pages mirror. One build feeds both targets so they can never drift.
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+# Never let two deploys race; a queued run waits rather than overwriting.
+concurrency:
+  group: deploy-production
+  cancel-in-progress: false
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      # Runs tsc -b first, so a type error stops the deploy before it ships.
+      - run: npm run build
+
+      # GitHub Pages has no .htaccess, so deep links (/adlp-for-girls) need a
+      # 404 fallback to reach the SPA. Harmless on Apache, which ignores it.
+      - name: Add SPA fallback for GitHub Pages
+        run: |
+          cp dist/index.html dist/404.html
+          touch dist/.nojekyll
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist/
+          # Required, or .htaccess and .nojekyll are silently dropped.
+          include-hidden-files: true
+          retention-days: 7
+
+  hostinger:
+    name: Deploy to emergingleadersasia.com
+    needs: build
+    runs-on: ubuntu-latest
+    env:
+      FTP_HOST: ${{ secrets.HOSTINGER_FTP_HOST }}
+      FTP_USER: ${{ secrets.HOSTINGER_FTP_USER }}
+      FTP_PASS: ${{ secrets.HOSTINGER_FTP_PASSWORD }}
+      REMOTE_DIR: /home/u310364268/domains/emergingleadersasia.com/public_html
+    steps:
+      - name: Check credentials are configured
+        id: creds
+        run: |
+          if [ -z "$FTP_HOST" ] || [ -z "$FTP_USER" ] || [ -z "$FTP_PASS" ]; then
+            echo "ready=false" >> "$GITHUB_OUTPUT"
+            echo "::warning::Hostinger FTP secrets not set — skipping live deploy. Add HOSTINGER_FTP_HOST, HOSTINGER_FTP_USER and HOSTINGER_FTP_PASSWORD under Settings > Secrets and variables > Actions."
+          else
+            echo "ready=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - uses: actions/download-artifact@v4
+        if: steps.creds.outputs.ready == 'true'
+        with:
+          name: dist
+          path: dist
+
+      - name: Install lftp
+        if: steps.creds.outputs.ready == 'true'
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq lftp
+
+      - name: Upload build
+        if: steps.creds.outputs.ready == 'true'
+        run: |
+          # --delete keeps the server an exact mirror of dist/, so superseded
+          # hashed bundles don't pile up. Scoped to the vhost's public_html.
+          # Values are expanded by bash, not lftp; Actions masks secrets in logs.
+          lftp -c "
+            set cmd:fail-exit true;
+            set ftp:ssl-allow true;
+            set ftp:ssl-force true;
+            set ftp:ssl-protect-data true;
+            open -u '${FTP_USER}','${FTP_PASS}' '${FTP_HOST}';
+            mirror --reverse --delete --parallel=4 --verbose \
+                   --exclude-glob .DS_Store \
+                   dist/ '${REMOTE_DIR}';
+          "
+
+      - name: Verify site is serving the new build
+        if: steps.creds.outputs.ready == 'true'
+        run: |
+          EXPECTED=$(grep -oE 'assets/index-[A-Za-z0-9_-]+\.js' dist/index.html | head -1)
+          echo "Expecting: $EXPECTED"
+          for i in $(seq 1 10); do
+            LIVE=$(curl -fsS -H 'Cache-Control: no-cache' \
+                   "https://emergingleadersasia.com/?cb=$RANDOM" \
+                   | grep -oE 'assets/index-[A-Za-z0-9_-]+\.js' | head -1 || true)
+            if [ "$LIVE" = "$EXPECTED" ]; then
+              echo "Live site is serving the new build."
+              exit 0
+            fi
+            echo "Attempt $i: live is '$LIVE', retrying in 15s..."
+            sleep 15
+          done
+          echo "::error::Live site never served $EXPECTED — check the deploy."
+          exit 1
+
+  pages:
+    name: Deploy to GitHub Pages
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist
+
+      - name: Publish to gh-pages branch
+        run: |
+          cd dist
+          git init -q -b gh-pages
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -q -m "Deploy ${GITHUB_SHA::7}"
+          git push -q --force \
+            "https://x-access-token:${{ github.token }}@github.com/${GITHUB_REPOSITORY}.git" \
+            gh-pages
