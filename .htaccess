@@ -1,0 +1,31 @@
+# ELA website — SPA routing + asset caching for Hostinger (LiteSpeed/Apache)
+
+# Never redirect a bare path to its directory — /media is an app route, but
+# public/media/ is also a real asset folder, and the trailing-slash redirect
+# would shadow the route and 403 on the denied directory listing.
+DirectorySlash Off
+Options -Indexes
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /
+
+  # Serve real files as-is. Deliberately NOT matching directories (-d):
+  # every asset we ship is a file, and matching directories would let
+  # public/media/ swallow the /media route.
+  RewriteCond %{REQUEST_FILENAME} -f
+  RewriteRule ^ - [L]
+
+  # Everything else falls back to the SPA entry point
+  RewriteRule ^ index.html [L]
+</IfModule>
+
+# Long-cache fingerprinted assets; keep HTML fresh
+<IfModule mod_headers.c>
+  <FilesMatch "\.(js|css|woff2?|png|jpg|jpeg|svg|webp|mp4)$">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </FilesMatch>
+  <FilesMatch "\.html$">
+    Header set Cache-Control "no-cache"
+  </FilesMatch>
+</IfModule>
