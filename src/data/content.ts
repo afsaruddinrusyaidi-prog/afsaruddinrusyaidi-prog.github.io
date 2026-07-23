@@ -537,7 +537,6 @@ export const NAV_LINKS = [
   { label: "Partnerships", to: "/partnerships" },
   { label: "Leadership", to: "/leadership" },
   { label: "Media", to: "/media" },
-  { label: "ADLP for Girls", to: "/adlp-for-girls" },
 ] as const
 
 // ── Join — screening checkpoints ─────────────────────────────────────────────

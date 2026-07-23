@@ -115,6 +115,19 @@ export function Footer() {
                   </Link>
                 </li>
               ))}
+              <li>
+                <Link
+                  to="/adlp-for-girls"
+                  className="inline-flex items-center gap-1.5 text-sm font-semibold text-white/90 transition-opacity hover:opacity-80"
+                >
+                  <span
+                    aria-hidden
+                    className="size-1.5 rounded-full"
+                    style={{ backgroundImage: "linear-gradient(100deg, #f4791f, #e0186e, #7a3fc9)" }}
+                  />
+                  ADLP for Girls
+                </Link>
+              </li>
             </FooterColumn>
 
             {/* Tracks */}

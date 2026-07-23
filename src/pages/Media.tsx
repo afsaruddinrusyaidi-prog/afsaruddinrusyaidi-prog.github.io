@@ -78,16 +78,7 @@ export default function Media() {
               <br />
               {MEDIA_HERO.headline[1]}
               <br />
-              <span
-                style={{
-                  background: "linear-gradient(92deg, #f04d1a 0%, #e0186e 80%)",
-                  WebkitBackgroundClip: "text",
-                  backgroundClip: "text",
-                  color: "transparent",
-                }}
-              >
-                {MEDIA_HERO.headline[2]}
-              </span>
+              <span className="text-flame">{MEDIA_HERO.headline[2]}</span>
             </h1>
             <p className="mt-6 max-w-md text-base leading-relaxed text-muted-foreground">
               {MEDIA_HERO.body[0]}

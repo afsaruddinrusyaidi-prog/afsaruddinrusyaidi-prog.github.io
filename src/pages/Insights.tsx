@@ -11,7 +11,6 @@ import {
   UsersRound,
 } from "lucide-react"
 import { Reveal } from "@/components/Reveal"
-import { Star } from "@/components/Decor"
 import {
   CONTRIBUTORS,
   EDITORIAL_COLLECTIONS,
@@ -85,8 +84,7 @@ export default function Insights() {
             <h1 className="mt-5 font-display text-4xl font-extrabold leading-[1.06] tracking-tight text-navy sm:text-5xl lg:text-[3.4rem]">
               {INSIGHTS_HERO.headline[0]}
               <br />
-              {INSIGHTS_HERO.headline[1]}{" "}
-              <Star className="inline size-6 -translate-y-2 text-flame lg:size-7" />
+              {INSIGHTS_HERO.headline[1]}
             </h1>
             <p className="mt-6 max-w-md text-base leading-relaxed text-muted-foreground sm:text-lg">
               {INSIGHTS_HERO.body}

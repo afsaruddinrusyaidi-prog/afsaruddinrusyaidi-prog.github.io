@@ -19,7 +19,6 @@ import {
 } from "lucide-react"
 import { Reveal } from "@/components/Reveal"
 import { CountUp } from "@/components/CountUp"
-import { Star } from "@/components/Decor"
 import {
   ANNUAL_RHYTHM,
   COMMUNITY_ENGINE,
@@ -134,8 +133,7 @@ export default function Initiatives() {
               <br />
               {INITIATIVES_HERO.headline[1]}
               <br />
-              {INITIATIVES_HERO.headline[2]}{" "}
-              <Star className="inline size-6 -translate-y-2 text-flame lg:size-7" />
+              {INITIATIVES_HERO.headline[2]}
             </h1>
             <p className="mt-6 max-w-md text-base leading-relaxed text-muted-foreground sm:text-lg">
               {INITIATIVES_HERO.body}
@@ -364,10 +362,7 @@ export default function Initiatives() {
             const IconCmp = RHYTHM_ICONS[i]
             return (
               <Reveal key={f.name} delay={i * 0.06} className="h-full">
-                <article
-                  className="flex h-full flex-col overflow-hidden rounded-3xl border border-border"
-                  style={{ backgroundColor: f.soft }}
-                >
+                <article className="flex h-full flex-col overflow-hidden rounded-3xl border border-border/60 bg-white transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_28px_55px_-32px_rgba(11,19,33,0.35)]">
                   <div className="relative m-3 aspect-[16/10] overflow-hidden rounded-2xl">
                     <img
                       src={f.image}

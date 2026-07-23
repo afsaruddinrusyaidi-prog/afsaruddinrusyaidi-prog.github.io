@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react"
 import { Link, NavLink, useLocation } from "react-router-dom"
 import { AnimatePresence, motion } from "framer-motion"
-import { ArrowUpRight, Menu, X } from "lucide-react"
+import { ArrowUpRight, Menu, Sparkles, X } from "lucide-react"
+
+const ADLP_GRAD = "linear-gradient(100deg, #f4791f, #e0186e, #7a3fc9)"
 import { NAV_LINKS } from "@/data/content"
 import { cn } from "@/lib/utils"
 
@@ -55,7 +57,20 @@ export function Navbar() {
             ))}
           </ul>
 
-          <div className="flex shrink-0 items-center gap-2">
+          <div className="flex shrink-0 items-center gap-2.5">
+            {/* Special microsite pill — gradient ring, distinct from the flame CTA */}
+            <Link
+              to="/adlp-for-girls"
+              aria-label="ADLP for Girls — the 2026 AI bootcamp microsite"
+              className="group relative hidden items-center rounded-full p-[1.6px] transition-transform duration-300 hover:-translate-y-0.5 lg:inline-flex"
+              style={{ backgroundImage: ADLP_GRAD }}
+            >
+              <span className="inline-flex min-h-10 items-center gap-1.5 rounded-full bg-white px-4 text-sm font-semibold text-navy transition-colors duration-300 group-hover:bg-transparent group-hover:text-white">
+                <Sparkles className="size-3.5 text-[#e0186e] transition-colors duration-300 group-hover:text-white" />
+                ADLP for Girls
+              </span>
+            </Link>
+
             <Link
               to="/join"
               className="hidden min-h-11 items-center gap-1.5 rounded-full bg-flame px-6 text-sm font-semibold text-white shadow-[0_14px_30px_-12px_rgba(240,77,26,0.55)] transition-all duration-300 hover:-translate-y-0.5 hover:brightness-105 sm:inline-flex"
@@ -103,6 +118,21 @@ export function Navbar() {
                   </NavLink>
                 </li>
               ))}
+              <li className="mt-2">
+                <Link
+                  to="/adlp-for-girls"
+                  className="flex min-h-12 items-center gap-2.5 rounded-2xl border border-[#e0186e]/25 bg-gradient-to-r from-[#f4791f]/10 via-[#e0186e]/10 to-[#7a3fc9]/10 px-4 text-base font-semibold text-navy"
+                >
+                  <Sparkles className="size-4 text-[#e0186e]" />
+                  ADLP for Girls
+                  <span
+                    className="ml-auto rounded-full px-2 py-0.5 text-[10px] font-extrabold uppercase tracking-wide text-white"
+                    style={{ backgroundImage: ADLP_GRAD }}
+                  >
+                    New
+                  </span>
+                </Link>
+              </li>
               <li className="mt-2">
                 <Link
                   to="/join"

@@ -57,7 +57,7 @@ export default function Join() {
           {SCREENING_STEPS.map((step, i) => (
             <Reveal key={step.step} delay={i * 0.06}>
               <div className="relative flex h-full flex-col rounded-3xl border border-border bg-white p-7">
-                <span className="font-display text-4xl font-bold text-amber">
+                <span className="font-display text-4xl font-bold text-flame">
                   {step.step}
                 </span>
                 <h3 className="mt-4 font-display text-lg font-bold text-navy">
@@ -95,7 +95,7 @@ export default function Join() {
                 "Partners get a reply within the week",
               ].map((line) => (
                 <li key={line} className="flex items-start gap-2.5 text-sm text-navy/80">
-                  <Check className="mt-0.5 size-4 shrink-0 text-amber" />
+                  <Check className="mt-0.5 size-4 shrink-0 text-flame" />
                   {line}
                 </li>
               ))}
@@ -116,8 +116,8 @@ export default function Join() {
 
           <Reveal delay={0.1}>
             {submitted ? (
-              <div className="flex h-full min-h-[420px] flex-col items-center justify-center rounded-[28px] bg-navy p-10 text-center text-cream">
-                <span className="inline-flex size-16 items-center justify-center rounded-full bg-amber text-navy">
+              <div className="flex h-full min-h-[420px] flex-col items-center justify-center rounded-[28px] bg-[#070c18] p-10 text-center text-cream">
+                <span className="inline-flex size-16 items-center justify-center rounded-full bg-flame text-white">
                   <Check className="size-7" />
                 </span>
                 <h3 className="mt-6 font-display text-2xl font-bold">
@@ -142,7 +142,7 @@ export default function Join() {
                       required
                       autoComplete="name"
                       placeholder="Your name"
-                      className="min-h-12 w-full rounded-2xl border border-border bg-cream px-4 text-sm text-navy outline-none transition-colors focus:border-amber"
+                      className="min-h-12 w-full rounded-2xl border border-border bg-cream px-4 text-sm text-navy outline-none transition-colors focus:border-flame"
                     />
                   </Field>
                   <Field label="Email" name="email">
@@ -153,7 +153,7 @@ export default function Join() {
                       required
                       autoComplete="email"
                       placeholder="you@example.com"
-                      className="min-h-12 w-full rounded-2xl border border-border bg-cream px-4 text-sm text-navy outline-none transition-colors focus:border-amber"
+                      className="min-h-12 w-full rounded-2xl border border-border bg-cream px-4 text-sm text-navy outline-none transition-colors focus:border-flame"
                     />
                   </Field>
                   <Field label="I want to…" name="intent">
@@ -161,7 +161,7 @@ export default function Join() {
                       id="intent"
                       name="intent"
                       required
-                      className="min-h-12 w-full appearance-none rounded-2xl border border-border bg-cream px-4 text-sm text-navy outline-none transition-colors focus:border-amber"
+                      className="min-h-12 w-full appearance-none rounded-2xl border border-border bg-cream px-4 text-sm text-navy outline-none transition-colors focus:border-flame"
                       defaultValue={INTENTS[0]}
                     >
                       {INTENTS.map((intent) => (
@@ -175,7 +175,7 @@ export default function Join() {
                     <select
                       id="track"
                       name="track"
-                      className="min-h-12 w-full appearance-none rounded-2xl border border-border bg-cream px-4 text-sm text-navy outline-none transition-colors focus:border-amber"
+                      className="min-h-12 w-full appearance-none rounded-2xl border border-border bg-cream px-4 text-sm text-navy outline-none transition-colors focus:border-flame"
                       defaultValue=""
                     >
                       <option value="">Not an AYTP alumnus</option>
@@ -193,14 +193,14 @@ export default function Join() {
                         name="message"
                         rows={4}
                         placeholder="Where you are now, and what you're looking for from the network."
-                        className="w-full rounded-2xl border border-border bg-cream px-4 py-3 text-sm text-navy outline-none transition-colors focus:border-amber"
+                        className="w-full rounded-2xl border border-border bg-cream px-4 py-3 text-sm text-navy outline-none transition-colors focus:border-flame"
                       />
                     </Field>
                   </div>
                 </div>
                 <button
                   type="submit"
-                  className="mt-7 inline-flex min-h-12 w-full items-center justify-center gap-1.5 rounded-full bg-amber text-sm font-semibold text-navy transition-transform duration-300 hover:-translate-y-0.5 sm:w-auto sm:px-8"
+                  className="mt-7 inline-flex min-h-12 w-full items-center justify-center gap-1.5 rounded-full bg-flame px-8 text-sm font-semibold text-white shadow-[0_18px_36px_-14px_rgba(240,77,26,0.6)] transition-all duration-300 hover:-translate-y-0.5 hover:brightness-105 sm:w-auto"
                 >
                   Submit application
                   <ArrowRight className="size-4" />

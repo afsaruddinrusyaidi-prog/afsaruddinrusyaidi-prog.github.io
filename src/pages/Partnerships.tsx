@@ -15,7 +15,6 @@ import {
 import { Reveal } from "@/components/Reveal"
 import { CountUp } from "@/components/CountUp"
 import { AlumniTicker } from "@/components/AlumniTicker"
-import { Star } from "@/components/Decor"
 import {
   NETWORK_RADIAL,
   PARTNER_CLOSING,
@@ -72,10 +71,7 @@ export default function Partnerships() {
             <h1 className="mt-5 font-display text-4xl font-extrabold leading-[1.06] tracking-tight text-navy sm:text-5xl lg:text-[3.3rem]">
               {PARTNER_HERO.headline[0]}
               <br />
-              everyone wants{" "}
-              <span className="whitespace-nowrap">
-                into. <Star className="inline size-6 -translate-y-2 text-flame lg:size-7" />
-              </span>
+              everyone wants <span className="text-flame">into.</span>
             </h1>
             <p className="mt-6 max-w-md text-base leading-relaxed text-muted-foreground sm:text-lg">
               {PARTNER_HERO.body}
@@ -280,14 +276,11 @@ export default function Partnerships() {
               const IconCmp = WAY_ICONS[i]
               return (
                 <Reveal key={way.title} delay={i * 0.06} className="h-full">
-                  <article
-                    className="flex h-full flex-col rounded-3xl border border-border p-6"
-                    style={{ backgroundColor: way.soft }}
-                  >
+                  <article className="flex h-full flex-col rounded-3xl border border-border/60 bg-white p-6 transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_28px_55px_-32px_rgba(11,19,33,0.35)]">
                     <div className="flex items-center justify-between">
                       <span
-                        className="inline-flex size-9 items-center justify-center rounded-full bg-white font-display text-sm font-extrabold shadow-sm"
-                        style={{ color: way.color }}
+                        className="inline-flex size-9 items-center justify-center rounded-full font-display text-sm font-extrabold"
+                        style={{ backgroundColor: `${way.color}18`, color: way.color }}
                       >
                         {way.num}
                       </span>

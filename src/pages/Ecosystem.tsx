@@ -19,7 +19,6 @@ import {
 } from "lucide-react"
 import { Reveal } from "@/components/Reveal"
 import { CountUp } from "@/components/CountUp"
-import { Star } from "@/components/Decor"
 import {
   ALUMNI_NETWORK,
   BY_THE_NUMBERS,
@@ -116,9 +115,7 @@ export default function Ecosystem() {
               <br />
               {CONTINUUM_HERO.headline[1]}
               <br />
-              <span className="text-flame">A Lifetime</span>{" "}
-              <span className="text-[#7a3fc9]">of Leadership.</span>
-              <Star className="ml-3 inline-block size-6 text-flame" />
+              <span className="text-flame">A Lifetime of Leadership.</span>
             </h1>
             <p className="mt-6 max-w-md text-[15px] leading-relaxed text-navy/60">
               {CONTINUUM_HERO.body}
@@ -325,13 +322,10 @@ export default function Ecosystem() {
           <div className="grid gap-8 rounded-[32px] border border-border/60 bg-white p-7 shadow-[0_30px_60px_-40px_rgba(11,19,33,0.35)] sm:p-10 lg:grid-cols-[0.85fr_1.35fr] lg:gap-10">
             <div className="lg:border-r lg:border-border/60 lg:pr-10">
               <img src="/ELA-Logo.png" alt="Emerging Leaders Asia" className="h-12 w-auto object-contain" loading="lazy" />
-              <h2 className="mt-5 font-display text-3xl font-extrabold uppercase leading-[1.05] tracking-tight sm:text-4xl">
-                <span className="gradient-text">
-                  {ALUMNI_NETWORK.title[0]}
-                  <br />
-                  {ALUMNI_NETWORK.title[1]}
-                </span>
-                <Star className="ml-2 inline-block size-5 text-flame" />
+              <h2 className="mt-5 font-display text-3xl font-extrabold uppercase leading-[1.05] tracking-tight text-navy sm:text-4xl">
+                {ALUMNI_NETWORK.title[0]}
+                <br />
+                {ALUMNI_NETWORK.title[1]}
               </h2>
               <p className="mt-3 text-base font-bold leading-snug text-navy">
                 {ALUMNI_NETWORK.taglines[0]}

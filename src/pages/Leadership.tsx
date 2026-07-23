@@ -15,7 +15,6 @@ import {
 } from "lucide-react"
 import { Reveal } from "@/components/Reveal"
 import { CountUp } from "@/components/CountUp"
-import { Star } from "@/components/Decor"
 import {
   DEPARTMENTS,
   LEAD_CLOSING,
@@ -112,10 +111,7 @@ export default function Leadership() {
             <h1 className="mt-5 font-display text-4xl font-extrabold leading-[1.06] tracking-tight text-navy sm:text-5xl lg:text-[3.3rem]">
               {LEAD_HERO.headline[0]}
               <br />
-              One shared{" "}
-              <span className="whitespace-nowrap">
-                standard. <Star className="inline size-6 -translate-y-2 text-flame lg:size-7" />
-              </span>
+              One shared <span className="text-flame">standard.</span>
             </h1>
             <p className="mt-6 max-w-md text-base leading-relaxed text-muted-foreground sm:text-lg">
               {LEAD_HERO.body}
