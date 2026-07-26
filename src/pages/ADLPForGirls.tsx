@@ -1,10 +1,11 @@
 import type { ComponentType } from "react"
+import { motion, useReducedMotion } from "framer-motion"
 import {
   ArrowRight,
   BrainCircuit,
   CalendarDays,
+  Compass,
   ExternalLink,
-  Gavel,
   HeartHandshake,
   Laptop,
   Lightbulb,
@@ -12,8 +13,8 @@ import {
   Mic,
   MoonStar,
   PartyPopper,
-  Rocket,
   Trophy,
+  Users,
   UsersRound,
   Wallet,
 } from "lucide-react"
@@ -32,29 +33,35 @@ const CODEX_LOGO_URL = "/codex-logo.png?v=3383f8aa"
 
 type Icon = ComponentType<{ className?: string }>
 
-const HERO_FACTS: { label: string; value: string; icon: Icon }[] = [
-  { label: "Dates", value: "9–13 Sept 2026", icon: CalendarDays },
-  { label: "Venue", value: "Perdana KLCC", icon: MapPin },
-  { label: "Spots", value: "80 spots available", icon: UsersRound },
-  { label: "Prize pool", value: "RM12,000", icon: Trophy },
+const HERO_FACTS: {
+  label: string
+  value: string
+  icon: Icon
+  accent: string
+  highlight?: boolean
+}[] = [
+  { label: "Dates", value: "9–13 September 2026", icon: CalendarDays, accent: "#f4791f" },
+  { label: "Venue", value: "Perdana KLCC", icon: MapPin, accent: "#e0186e" },
+  { label: "Spots", value: "80 spots", icon: UsersRound, accent: "#9a63e8" },
+  { label: "Prize pool", value: "RM12,000 prize pool", icon: Trophy, accent: "#f4b13f" },
 ]
 
 const PILLARS: { title: string; body: string; icon: Icon; accent: string }[] = [
   {
     title: "80 women, 5 days.",
-    body: "Live and build together with ambitious women selected from universities across Malaysia.",
+    body: "Spend five days learning, building, and sharing ideas with a cohort of ambitious women selected from across Malaysia.",
     icon: UsersRound,
     accent: "#f4791f",
   },
   {
-    title: "Everyone ships.",
-    body: "Every team walks out with a working product, not a concept.",
-    icon: Rocket,
+    title: "Lead with purpose.",
+    body: "Develop the skills to bring people together, turn ideas into action, and grow into a leader in the AI economy.",
+    icon: Compass,
     accent: "#7a3fc9",
   },
   {
     title: "RM12,000 up for grabs.",
-    body: "Top teams on Demo Day share a prize pool of up to RM12,000.",
+    body: "Winners of each track will share a total prize pool of up to RM12,000 at Demo Day.",
     icon: Trophy,
     accent: "#f4791f",
   },
@@ -95,46 +102,59 @@ const JOURNEY: { day: string; title: string; body: string; icon: Icon }[] = [
 
 const BEYOND_THE_SPRINT: { title: string; body: string; icon: Icon; accent: string }[] = [
   {
-    title: "Founder Fireside Chats",
-    body: "Hear directly from entrepreneurs, builders, and leaders who have turned ideas into real ventures.",
+    title: "Founder Panels",
+    body: "Hear founders share the decisions, setbacks, and breakthroughs behind their companies.",
     icon: Mic,
     accent: "#f4791f",
   },
   {
-    title: "Mentorship On Demand",
-    body: "Get guidance from experienced mentors, coaches, and industry practitioners throughout your startup journey.",
+    title: "Mentor Circles",
+    body: "Sit down with entrepreneurs and practitioners to think through your ideas and next steps.",
     icon: HeartHandshake,
     accent: "#e0186e",
   },
   {
-    title: "Pizza Nights & Community Sessions",
-    body: "Unwind, exchange ideas, and connect with your cohort beyond the workshop.",
+    title: "Pizza + Movie Night",
+    body: "End a big day with pizza, a film, and a night to recharge and make new friends.",
     icon: PartyPopper,
     accent: "#7a3fc9",
   },
   {
-    title: "Demo Day Judges",
-    body: "Pitch your startup to a panel of leaders from technology, business, and entrepreneurship.",
-    icon: Gavel,
+    title: "ELA Alumni Community",
+    body: "Stay connected through ELA events, opportunities, and a network of ambitious women.",
+    icon: Users,
     accent: "#f4791f",
   },
 ]
 
-const BACKERS: { name: string; logo: string; blurb: string }[] = [
+const BACKERS: { name: string; logo: string; url: string; blurb: string }[] = [
+  {
+    name: "Axiata Foundation",
+    logo: "/partners/axiata-foundation.png",
+    url: "https://www.axiata-foundation.com",
+    blurb:
+      "Axiata Foundation supports initiatives that create meaningful opportunities for young people and communities across Asia.",
+  },
   {
     name: "Codex",
     logo: CODEX_LOGO_URL,
-    blurb: "OpenAI's AI coding agent — the tool every team learns on Day 3 and builds with through Demo Day.",
+    url: "https://luma.com/user/CodexMY",
+    blurb:
+      "Codex is OpenAI's AI coding agent, designed to help people turn ideas into working software using natural-language instructions.",
   },
   {
-    name: "Axiata Foundation",
-    logo: "/partners/axiata.png",
-    blurb: "Sponsors the full residential experience, from accommodation to the Demo Day prize pool.",
+    name: "Inspire Group",
+    logo: "/partners/inspire-group.png",
+    url: "https://www.inspiregroup.net",
+    blurb:
+      "Inspire Group is a learning and development partner that creates practical programmes for emerging talent and future leaders.",
   },
   {
     name: "Emerging Leaders Asia",
     logo: "/ELA-Logo.png",
-    blurb: "The AYTP alumni network organising the programme, providing co-leads, mentors, and coaches.",
+    url: "https://emergingleadersasia.com/",
+    blurb:
+      "Emerging Leaders Asia is an alumni-led community that connects ambitious young people with opportunities across the region.",
   },
 ]
 
@@ -214,7 +234,7 @@ function SectionHeading({
     <Reveal className={centered ? "mx-auto max-w-3xl text-center" : "max-w-2xl"}>
       <SectionPill tone={dark ? "dark" : undefined}>{eyebrow}</SectionPill>
       <h2
-        className={`mt-5 font-display text-3xl font-extrabold leading-tight sm:text-4xl lg:text-[2.7rem] ${
+        className={`mt-6 font-display text-[2rem] font-extrabold leading-[1.08] tracking-tight sm:text-4xl lg:text-[2.6rem] ${
           dark ? "text-white" : "text-navy"
         }`}
       >
@@ -222,8 +242,8 @@ function SectionHeading({
       </h2>
       {body && (
         <p
-          className={`mt-5 text-base leading-relaxed sm:text-lg ${
-            dark ? "text-white/62" : "text-muted-foreground"
+          className={`mt-5 text-base leading-relaxed sm:text-[17px] ${
+            dark ? "text-white/60" : "text-muted-foreground"
           }`}
         >
           {body}
@@ -234,109 +254,117 @@ function SectionHeading({
 }
 
 export default function ADLPForGirls() {
+  const reduceMotion = useReducedMotion()
+
   return (
     <>
       {/* ══ Hero ══ */}
-      <section className="relative overflow-hidden bg-[#070c18] pb-20 pt-32 text-white sm:pb-24 sm:pt-36">
+      <section className="relative overflow-hidden bg-[#070c18] pb-20 pt-28 text-white sm:pb-24 sm:pt-36">
         <div
           aria-hidden
-          className="pointer-events-none absolute -left-32 top-24 size-[28rem] rounded-full bg-[#7a3fc9]/25 blur-[110px]"
+          className="pointer-events-none absolute inset-0"
+          style={{
+            backgroundImage:
+              "radial-gradient(ellipse 60% 50% at 50% 0%, rgba(154,99,232,0.20), transparent 70%), radial-gradient(ellipse 50% 45% at 12% 25%, rgba(224,24,110,0.16), transparent 70%), radial-gradient(ellipse 50% 45% at 88% 20%, rgba(244,121,31,0.14), transparent 70%)",
+          }}
         />
         <div
           aria-hidden
-          className="pointer-events-none absolute -right-36 top-6 size-[32rem] rounded-full bg-[#e0186e]/20 blur-[120px]"
+          className="pointer-events-none absolute left-1/2 top-[-14rem] h-[34rem] w-[64rem] -translate-x-1/2 rounded-full bg-[#7a3fc9]/25 blur-[150px]"
         />
         <div
           aria-hidden
-          className="pointer-events-none absolute bottom-0 left-1/2 h-72 w-[42rem] -translate-x-1/2 rounded-full bg-[#f4791f]/15 blur-[120px]"
+          className="pointer-events-none absolute -left-40 top-10 size-[30rem] rounded-full bg-[#e0186e]/16 blur-[140px]"
+        />
+        <div
+          aria-hidden
+          className="pointer-events-none absolute -right-40 top-24 size-[30rem] rounded-full bg-[#f4791f]/14 blur-[140px]"
         />
 
-        <div className="relative mx-auto grid max-w-7xl gap-14 px-6 sm:px-8 lg:grid-cols-[1.05fr_0.95fr] lg:items-center lg:gap-10">
-          <Reveal>
+        <div className="relative mx-auto max-w-5xl px-6 sm:px-8">
+          <Reveal className="flex flex-col items-center text-center">
             <img
               src="/adlp-for-girls-logo.png?v=2026hd"
               alt="ADLP For Girls x Codex 2026"
-              className="h-auto w-full max-w-[320px]"
+              className="h-auto w-full max-w-[240px] sm:max-w-[300px]"
             />
-            <p className="mt-5 text-xs font-bold uppercase tracking-[0.18em] text-white/55 sm:text-sm">
-              POWERED BY EMERGING LEADERS ASIA
-            </p>
-            <h1 className="mt-8 max-w-xl font-display text-4xl font-extrabold leading-[1.02] tracking-tight sm:text-5xl lg:text-[3.8rem]">
+            <h1 className="mt-7 font-display text-[3rem] font-black leading-[0.94] tracking-tighter sm:text-6xl lg:text-[4.5rem]">
               ADLP for Girls x{" "}
-              <span className="bg-gradient-to-r from-[#f4791f] via-[#e0186e] to-[#9a63e8] bg-clip-text text-transparent">
-                Codex 2026
+              <span className="block">
+                <span className="bg-gradient-to-r from-[#4356ea] via-[#6b86f5] to-[#93a2ff] bg-clip-text text-transparent">
+                  Codex
+                </span>
+                <span className="ml-3 sm:ml-4">2026</span>
               </span>
             </h1>
-            <p className="mt-6 max-w-xl text-base leading-relaxed text-white/78 sm:text-lg">
-              Join a fully sponsored five-day AI Startup Bootcamp in the heart of Kuala Lumpur for
-              women aged 18–24. Learn AI, leadership, and entrepreneurship, then turn your ideas
-              into a startup.
+            <p className="mt-6 flex flex-wrap items-center justify-center gap-x-6 gap-y-1.5 text-[15px] font-semibold tracking-tight text-white/85 sm:text-base">
+              <span className="text-white/35">Powered by</span>
+              <span className="whitespace-nowrap">Inspire Group</span>
+              <span className="whitespace-nowrap">Axiata Foundation</span>
+              <span className="whitespace-nowrap">Emerging Leaders Asia</span>
             </p>
-            <div className="mt-9 flex flex-wrap items-center gap-5">
+            <p className="mt-6 max-w-2xl text-base leading-relaxed text-white/55 sm:text-[17px]">
+              A fully sponsored five-day AI Startup Bootcamp where 80 women aged 18–24 come together
+              in KL to lead, build with AI, and turn a bold idea into a real startup.
+            </p>
+          </Reveal>
+
+          <Reveal delay={0.12} className="flex flex-col items-center">
+            <div className="mt-8 flex flex-wrap items-center justify-center gap-2.5">
+              {HERO_FACTS.map((fact) => {
+                const IconCmp = fact.icon
+                return (
+                  <span
+                    key={fact.label}
+                    className="inline-flex items-center gap-2.5 rounded-full border border-white/10 bg-white/[0.04] px-4 py-2.5 text-sm font-medium text-white/75 backdrop-blur-sm"
+                  >
+                    <span className="shrink-0" style={{ color: fact.accent }}>
+                      <IconCmp className="size-4" />
+                    </span>
+                    {fact.value}
+                  </span>
+                )
+              })}
+            </div>
+            <div className="mt-8 flex flex-col items-center gap-4 sm:flex-row sm:gap-5">
               <a
                 href={REGISTER_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex min-h-13 items-center gap-2 rounded-full bg-gradient-to-r from-[#f4791f] via-[#e0186e] to-[#7a3fc9] px-8 text-sm font-bold text-white shadow-[0_18px_45px_-16px_rgba(224,24,110,0.8)] transition-transform duration-300 hover:-translate-y-1"
+                className="inline-flex min-h-14 items-center justify-center gap-2.5 rounded-full bg-gradient-to-r from-[#f4791f] via-[#e0186e] to-[#7a3fc9] px-10 text-base font-bold text-white shadow-[0_18px_45px_-16px_rgba(224,24,110,0.8)] transition-transform duration-300 hover:-translate-y-1"
               >
                 Apply now
                 <ArrowRight className="size-4" />
               </a>
-              <span className="text-sm font-semibold text-white/55">
-                Applications close 15 August 2026
+              <span className="inline-flex items-center gap-2 rounded-full border border-[#4ade80]/25 bg-[#4ade80]/10 px-4 py-2 text-[13px] font-semibold text-[#86efac]">
+                <span className="relative flex size-2">
+                  <span
+                    aria-hidden
+                    className="absolute inline-flex size-full animate-ping rounded-full bg-[#4ade80] opacity-70"
+                  />
+                  <span className="relative inline-flex size-2 rounded-full bg-[#4ade80]" />
+                </span>
+                Applications open until 15 August 2026
               </span>
-            </div>
-          </Reveal>
-
-          <Reveal delay={0.12}>
-            <div className="relative overflow-hidden rounded-[32px] border border-white/12 bg-white/[0.06] p-2 backdrop-blur-md">
-              <div
-                aria-hidden
-                className="pointer-events-none absolute -right-10 -top-10 size-48 rounded-full bg-[#e0186e]/25 blur-3xl"
-              />
-              <div className="relative grid grid-cols-2 gap-2">
-                {HERO_FACTS.map((fact) => {
-                  const IconCmp = fact.icon
-                  return (
-                    <div
-                      key={fact.label}
-                      className="rounded-[24px] bg-white/[0.04] p-5 sm:p-6"
-                    >
-                      <IconCmp className="size-5 text-[#f4791f]" />
-                      <p className="mt-4 text-[11px] font-extrabold uppercase tracking-[0.15em] text-white/50">
-                        {fact.label}
-                      </p>
-                      <p className="mt-1.5 text-[15px] font-bold leading-snug text-white">
-                        {fact.value}
-                      </p>
-                    </div>
-                  )
-                })}
-              </div>
-              <div className="relative m-2 mt-2 rounded-[24px] bg-gradient-to-r from-[#f4791f]/15 via-[#e0186e]/15 to-[#7a3fc9]/15 px-5 py-4">
-                <p className="text-sm font-semibold leading-relaxed text-white/85">
-                  A Fully Sponsored Startup Bootcamp
-                </p>
-              </div>
             </div>
           </Reveal>
         </div>
       </section>
 
       {/* ══ Build with Codex — featured, then the rest of the pillars ══ */}
-      <section className="relative overflow-hidden bg-white py-20 sm:py-24">
+      <section className="relative overflow-hidden bg-white py-24 sm:py-32">
         <div
           aria-hidden
-          className="pointer-events-none absolute -right-24 top-0 size-96 rounded-full bg-[#f4791f]/8 blur-3xl"
-        />
-        <div
-          aria-hidden
-          className="pointer-events-none absolute -left-24 bottom-0 size-80 rounded-full bg-[#7a3fc9]/8 blur-3xl"
+          className="pointer-events-none absolute -right-24 top-0 size-96 rounded-full bg-[#f4791f]/6 blur-3xl"
         />
         <div className="relative mx-auto max-w-7xl px-6 sm:px-8">
-          <SectionHeading eyebrow="THE FOUR PILLARS" title="Built like a founder sprint, not a classroom." centered />
+          <SectionHeading
+            eyebrow="THE BOOTCAMP EXPERIENCE"
+            title="Build an AI startup in 5 days"
+            centered
+          />
 
-          <Reveal delay={0.06} className="mt-12">
+          <Reveal delay={0.06} className="mt-14">
             <article className="group relative overflow-hidden rounded-[32px] bg-[#0b1321] p-8 text-white transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl sm:p-10 lg:flex lg:items-center lg:gap-10">
               <div
                 aria-hidden
@@ -351,8 +379,9 @@ export default function ADLPForGirls() {
               <div className="relative mt-6 lg:mt-0">
                 <h3 className="font-display text-2xl font-extrabold sm:text-3xl">Build with Codex.</h3>
                 <p className="mt-3 max-w-2xl text-[15px] leading-relaxed text-white/70 sm:text-base">
-                  Every team gets free Codex credits, OpenAI&apos;s AI coding agent, to build a real
-                  product. No tech background required.
+                  Every team receives Codex credits and hands-on training to turn an idea into a
+                  working AI prototype. The programme is designed for first-time and experienced
+                  builders alike.
                 </p>
               </div>
               <span className="absolute right-8 top-8 hidden font-display text-sm font-extrabold text-white/20 lg:block">
@@ -361,12 +390,12 @@ export default function ADLPForGirls() {
             </article>
           </Reveal>
 
-          <div className="mt-5 grid gap-5 sm:grid-cols-3">
+          <div className="mt-6 grid gap-6 sm:grid-cols-3">
             {PILLARS.map((pillar, index) => {
               const IconCmp = pillar.icon
               return (
                 <Reveal key={pillar.title} delay={0.1 + index * 0.06}>
-                  <article className="group h-full rounded-[28px] border border-border bg-background p-7 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl sm:p-8">
+                  <article className="group h-full rounded-[28px] border border-border bg-background p-8 transition-all duration-300 hover:-translate-y-1 hover:border-flame/25 hover:shadow-xl">
                     <div className="flex items-start justify-between gap-4">
                       <span
                         className="inline-flex size-13 items-center justify-center rounded-2xl"
@@ -378,7 +407,7 @@ export default function ADLPForGirls() {
                         0{index + 2}
                       </span>
                     </div>
-                    <h3 className="mt-7 font-display text-xl font-extrabold text-navy">
+                    <h3 className="mt-8 font-display text-xl font-extrabold tracking-tight text-navy">
                       {pillar.title}
                     </h3>
                     <p className="mt-3 text-[15px] leading-relaxed text-muted-foreground">
@@ -393,7 +422,7 @@ export default function ADLPForGirls() {
       </section>
 
       {/* ══ Your 5-day journey — dark timeline ══ */}
-      <section className="relative overflow-hidden bg-[#0b1321] py-20 text-white sm:py-24">
+      <section className="relative overflow-hidden bg-[#0b1321] py-24 text-white sm:py-32">
         <div
           aria-hidden
           className="pointer-events-none absolute -left-28 top-0 size-96 rounded-full bg-[#7a3fc9]/20 blur-[110px]"
@@ -405,38 +434,39 @@ export default function ADLPForGirls() {
         <div className="relative mx-auto max-w-7xl px-6 sm:px-8">
           <SectionHeading
             eyebrow="YOUR 5-DAY JOURNEY"
-            title="Five days from team formation to Demo Day."
-            body="Draft outline. Final agenda to be confirmed."
+            title="Programme Agenda"
             centered
             dark
           />
-          <div className="relative mt-14">
-            <div className="absolute bottom-8 left-[26px] top-8 hidden w-px bg-gradient-to-b from-[#f4791f] via-[#e0186e] to-[#7a3fc9] sm:block lg:left-1/2" />
-            <div className="space-y-5">
+          <div className="relative mx-auto mt-16 max-w-3xl">
+            <motion.div
+              aria-hidden
+              className="absolute bottom-10 left-6 top-10 w-px origin-top bg-gradient-to-b from-[#f4791f] via-[#e0186e] to-[#7a3fc9] sm:left-7"
+              initial={reduceMotion ? { opacity: 0 } : { scaleY: 0 }}
+              whileInView={reduceMotion ? { opacity: 1 } : { scaleY: 1 }}
+              viewport={{ once: true, margin: "-120px" }}
+              transition={{ duration: 1.1, ease: [0.22, 1, 0.36, 1] }}
+            />
+            <div className="space-y-3">
               {JOURNEY.map((step, index) => {
                 const IconCmp = step.icon
-                const alignLeft = index % 2 === 0
                 return (
-                  <Reveal key={step.day} delay={index * 0.04}>
-                    <div className="relative grid items-center gap-6 sm:grid-cols-[52px_1fr] lg:grid-cols-[1fr_72px_1fr]">
-                      <article
-                        className={`rounded-[26px] border border-white/12 bg-white/[0.06] p-6 backdrop-blur-sm sm:col-start-2 sm:p-7 ${
-                          alignLeft ? "lg:col-start-1" : "lg:col-start-3"
-                        }`}
-                      >
-                        <p className="text-xs font-extrabold uppercase tracking-[0.18em] text-[#ff6fa8]">
-                          {step.day}
-                        </p>
-                        <h3 className="mt-2 font-display text-xl font-extrabold text-white">
-                          {step.title}
-                        </h3>
-                        <p className="mt-3 text-sm leading-relaxed text-white/62">{step.body}</p>
-                      </article>
-                      <span
-                        className="row-start-1 hidden size-[52px] items-center justify-center rounded-full border-4 border-[#0b1321] bg-gradient-to-br from-[#f4791f] via-[#e0186e] to-[#7a3fc9] text-white shadow-lg sm:flex lg:col-start-2"
-                      >
+                  <Reveal key={step.day} delay={index * 0.06}>
+                    <div className="group relative flex items-start gap-5 sm:gap-7">
+                      <span className="relative z-10 mt-1 flex size-12 shrink-0 items-center justify-center rounded-full border-4 border-[#0b1321] bg-gradient-to-br from-[#f4791f] via-[#e0186e] to-[#7a3fc9] text-white shadow-lg transition-transform duration-300 group-hover:scale-110 sm:size-[3.75rem]">
                         <IconCmp className="size-5" />
                       </span>
+                      <article className="min-w-0 flex-1 rounded-[24px] border border-white/10 bg-white/[0.04] p-6 backdrop-blur-sm transition-colors duration-300 group-hover:border-white/20 group-hover:bg-white/[0.07] sm:p-7">
+                        <p className="text-[11px] font-extrabold uppercase tracking-[0.18em] text-[#ff6fa8]">
+                          {step.day}
+                        </p>
+                        <h3 className="mt-2.5 font-display text-lg font-extrabold tracking-tight text-white sm:text-xl">
+                          {step.title}
+                        </h3>
+                        <p className="mt-2.5 text-[15px] leading-relaxed text-white/60">
+                          {step.body}
+                        </p>
+                      </article>
                     </div>
                   </Reveal>
                 )
@@ -447,28 +477,24 @@ export default function ADLPForGirls() {
       </section>
 
       {/* ══ Beyond the sprint — community, mentorship, network ══ */}
-      <section className="relative overflow-hidden bg-white py-20 sm:py-24">
+      <section className="relative overflow-hidden bg-white py-24 sm:py-32">
         <div
           aria-hidden
-          className="pointer-events-none absolute -left-24 top-10 size-96 rounded-full bg-[#7a3fc9]/8 blur-3xl"
-        />
-        <div
-          aria-hidden
-          className="pointer-events-none absolute -right-24 bottom-0 size-80 rounded-full bg-[#e0186e]/8 blur-3xl"
+          className="pointer-events-none absolute -left-24 top-10 size-96 rounded-full bg-[#7a3fc9]/6 blur-3xl"
         />
         <div className="relative mx-auto max-w-7xl px-6 sm:px-8">
           <SectionHeading
-            eyebrow="BEYOND THE SPRINT"
-            title="More than building a product."
-            body="The best ideas come from conversations, connections, and communities. Beyond the sprint, you'll get to learn from founders, meet industry leaders, and build lifelong friendships with women who are just as ambitious as you."
+            eyebrow="WHAT MAKES THIS PROGRAMME FUN?"
+            title="More than your typical bootcamp"
+            body="Across five days, you will meet founders, get real feedback on your ideas, celebrate with your cohort, and join a community that stays with you long after Demo Day."
             centered
           />
-          <div className="mt-12 grid gap-5 sm:grid-cols-2">
+          <div className="mt-14 grid gap-6 sm:grid-cols-2">
             {BEYOND_THE_SPRINT.map((item, index) => {
               const IconCmp = item.icon
               return (
                 <Reveal key={item.title} delay={index * 0.06}>
-                  <article className="group flex h-full items-start gap-5 rounded-[28px] border border-border bg-background p-7 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl sm:p-8">
+                  <article className="group flex h-full flex-col gap-5 rounded-[28px] border border-border bg-background p-7 transition-all duration-300 hover:-translate-y-1 hover:border-flame/25 hover:shadow-xl sm:flex-row sm:items-start sm:p-8">
                     <span
                       className="inline-flex size-13 shrink-0 items-center justify-center rounded-2xl"
                       style={{ backgroundColor: `${item.accent}16`, color: item.accent }}
@@ -476,7 +502,7 @@ export default function ADLPForGirls() {
                       <IconCmp className="size-6" />
                     </span>
                     <div>
-                      <h3 className="font-display text-xl font-extrabold text-navy sm:text-2xl">
+                      <h3 className="font-display text-xl font-extrabold tracking-tight text-navy">
                         {item.title}
                       </h3>
                       <p className="mt-3 text-[15px] leading-relaxed text-muted-foreground">
@@ -492,31 +518,48 @@ export default function ADLPForGirls() {
       </section>
 
       {/* ══ Backed by — organisers + logos, merged ══ */}
-      <section className="relative overflow-hidden bg-white py-20 sm:py-24">
+      <section className="relative overflow-hidden border-t border-border bg-background py-24 sm:py-32">
         <div
           aria-hidden
-          className="pointer-events-none absolute -left-24 top-10 size-80 rounded-full bg-[#f4791f]/8 blur-3xl"
+          className="pointer-events-none absolute -left-24 top-10 size-80 rounded-full bg-[#f4791f]/6 blur-3xl"
         />
         <div className="relative mx-auto max-w-7xl px-6 sm:px-8">
           <div className="grid items-start gap-12 lg:grid-cols-[0.75fr_1.25fr] lg:gap-16">
             <SectionHeading
-              eyebrow="BACKED BY"
-              title="Organised by Emerging Leaders Asia and Codex."
-              body="We're a group of alumni coming together to empower young women through AI, entrepreneurship, and leadership, giving them the skills, confidence, and platform to build something meaningful and pursue their dreams."
+              eyebrow="MADE POSSIBLE BY FOUR CO-ORGANISERS"
+              title="Why we organise this."
+              body="We created this bootcamp to give ambitious, high-potential young women the resources, community, and confidence to explore leadership, entrepreneurship, and AI. Over five days, participants will learn, build, and have fun together while gaining experiences, relationships, and opportunities that can shape their education and career journeys long after the programme ends."
             />
-            <div className="grid gap-5">
+            <div className="grid gap-4">
               {BACKERS.map((backer, index) => (
                 <Reveal key={backer.name} delay={0.08 + index * 0.06}>
-                  <div className="flex items-center gap-5 rounded-[26px] border border-border bg-background p-6 sm:p-7">
-                    <img
-                      src={backer.logo}
-                      alt={backer.name}
-                      className="h-10 w-auto shrink-0 object-contain"
-                    />
-                    <div className="h-9 w-px shrink-0 bg-border" />
+                  <div className="flex flex-col gap-4 rounded-[26px] border border-border bg-white p-6 transition-all duration-300 hover:-translate-y-0.5 hover:border-flame/25 hover:shadow-lg sm:flex-row sm:items-center sm:gap-6 sm:p-7">
+                    <a
+                      href={backer.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={`Visit ${backer.name}`}
+                      className="flex h-11 w-28 shrink-0 items-center justify-start rounded-lg transition-opacity duration-300 hover:opacity-65 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-flame sm:h-12 sm:w-32 sm:justify-center"
+                    >
+                      <img
+                        src={backer.logo}
+                        alt={backer.name}
+                        className="max-h-full max-w-full object-contain"
+                      />
+                    </a>
+                    <div className="hidden h-12 w-px shrink-0 bg-border sm:block" />
                     <p className="text-[15px] leading-relaxed text-muted-foreground">
-                      <span className="font-bold text-navy">{backer.name}. </span>
-                      {backer.blurb}
+                      {backer.blurb.startsWith(backer.name) ? (
+                        <>
+                          <span className="font-bold text-navy">{backer.name}</span>
+                          {backer.blurb.slice(backer.name.length)}
+                        </>
+                      ) : (
+                        <>
+                          <span className="font-bold text-navy">{backer.name}. </span>
+                          {backer.blurb}
+                        </>
+                      )}
                     </p>
                   </div>
                 </Reveal>
@@ -527,7 +570,7 @@ export default function ADLPForGirls() {
       </section>
 
       {/* ══ Logistics — dark spec sheet ══ */}
-      <section className="relative overflow-hidden bg-[#0b1321] py-20 text-white sm:py-24">
+      <section className="relative overflow-hidden bg-[#0b1321] py-24 text-white sm:py-32">
         <div
           aria-hidden
           className="pointer-events-none absolute -right-20 top-10 size-80 rounded-full bg-[#e0186e]/20 blur-[100px]"
@@ -537,26 +580,27 @@ export default function ADLPForGirls() {
             <SectionHeading
               eyebrow="LOGISTICS"
               title="Everything you need to show up ready."
+              body="Accommodation, meals, and AI tool access are all covered. Bring a laptop and an idea you care about, and we will handle the rest."
               dark
             />
             <Reveal delay={0.1}>
-              <div className="grid overflow-hidden rounded-[30px] border border-white/12 sm:grid-cols-2">
+              <div className="grid overflow-hidden rounded-[30px] border border-white/10 sm:grid-cols-2">
                 {LOGISTICS.map((item, index) => {
                   const IconCmp = item.icon
                   return (
                     <div
                       key={item.label}
-                      className={`p-6 sm:p-7 ${
-                        index > 0 ? "border-t border-white/12" : ""
-                      } ${index % 2 === 1 ? "sm:border-l sm:border-white/12" : ""} ${
+                      className={`p-7 transition-colors duration-300 hover:bg-white/[0.03] ${
+                        index > 0 ? "border-t border-white/10" : ""
+                      } ${index % 2 === 1 ? "sm:border-l sm:border-white/10" : ""} ${
                         index === 1 ? "sm:border-t-0" : ""
                       }`}
                     >
                       <IconCmp className="size-5 text-[#ff6fa8]" />
-                      <p className="mt-4 text-xs font-extrabold uppercase tracking-[0.15em] text-white/45">
+                      <p className="mt-5 text-[11px] font-bold uppercase tracking-[0.16em] text-white/45">
                         {item.label}
                       </p>
-                      <p className="mt-2 text-sm font-bold leading-relaxed text-white">
+                      <p className="mt-2 text-[15px] font-bold leading-relaxed text-white">
                         {item.value}
                       </p>
                     </div>
@@ -569,17 +613,21 @@ export default function ADLPForGirls() {
       </section>
 
       {/* ══ FAQ ══ */}
-      <section className="bg-white py-20 sm:py-24">
+      <section className="bg-white py-24 sm:py-32">
         <div className="mx-auto grid max-w-7xl items-start gap-12 px-6 sm:px-8 lg:grid-cols-[0.75fr_1.25fr] lg:gap-16">
-          <SectionHeading eyebrow="FAQ" title="Before you apply." />
+          <SectionHeading
+            eyebrow="FAQ"
+            title="Before you apply."
+            body="No coding experience, no idea, and no team required. Here are the questions applicants ask us most."
+          />
           <Reveal delay={0.1}>
-            <Accordion className="rounded-[28px] border border-border bg-background px-5 sm:px-7">
+            <Accordion className="rounded-[28px] border border-border bg-background px-6 sm:px-8">
               {FAQS.map((faq) => (
                 <AccordionItem key={faq.question} value={faq.question}>
-                  <AccordionTrigger className="py-5 text-base font-bold text-navy hover:no-underline">
+                  <AccordionTrigger className="py-6 text-base font-bold tracking-tight text-navy hover:no-underline">
                     {faq.question}
                   </AccordionTrigger>
-                  <AccordionContent className="pb-5 pr-8 text-[15px] leading-relaxed text-muted-foreground">
+                  <AccordionContent className="pb-6 pr-8 text-[15px] leading-relaxed text-muted-foreground">
                     {faq.answer}
                   </AccordionContent>
                 </AccordionItem>
@@ -590,9 +638,9 @@ export default function ADLPForGirls() {
       </section>
 
       {/* ══ Final CTA ══ */}
-      <section id="register" className="px-3 pb-16 sm:px-5 sm:pb-20">
+      <section id="register" className="px-3 pb-20 sm:px-5 sm:pb-24">
         <Reveal>
-          <div className="relative mx-auto max-w-[1400px] overflow-hidden rounded-[38px] bg-[#070c18] px-6 py-16 text-center text-white sm:px-10 sm:py-20">
+          <div className="relative mx-auto max-w-[1400px] overflow-hidden rounded-[38px] bg-[#070c18] px-6 py-20 text-center text-white sm:px-10 sm:py-24">
             <div
               aria-hidden
               className="absolute -left-28 bottom-0 size-80 rounded-full bg-[#f4791f]/25 blur-[100px]"
@@ -603,20 +651,20 @@ export default function ADLPForGirls() {
             />
             <div className="relative mx-auto max-w-3xl">
               <MoonStar className="mx-auto size-8 text-[#f4791f]" />
-              <h2 className="mt-6 font-display text-4xl font-extrabold leading-tight sm:text-5xl">
+              <h2 className="mt-7 font-display text-[2.5rem] font-black leading-[1.02] tracking-tighter sm:text-5xl lg:text-[3.4rem]">
                 Eighty places. Five days.{" "}
                 <span className="bg-gradient-to-r from-[#f4791f] via-[#e0186e] to-[#9a63e8] bg-clip-text text-transparent">
                   RM12,000 on the line.
                 </span>
               </h2>
-              <p className="mt-6 text-base text-white/62 sm:text-lg">
+              <p className="mt-6 text-base text-white/60 sm:text-[17px]">
                 Applications are now open. Submit your application by 15 August 2026.
               </p>
               <a
                 href={REGISTER_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mt-8 inline-flex min-h-13 items-center gap-2 rounded-full bg-gradient-to-r from-[#f4791f] via-[#e0186e] to-[#7a3fc9] px-9 text-sm font-bold text-white shadow-[0_18px_45px_-16px_rgba(224,24,110,0.8)] transition-transform duration-300 hover:-translate-y-1"
+                className="mt-10 inline-flex min-h-14 items-center gap-2 rounded-full bg-gradient-to-r from-[#f4791f] via-[#e0186e] to-[#7a3fc9] px-9 text-base font-bold text-white shadow-[0_18px_45px_-16px_rgba(224,24,110,0.8)] transition-transform duration-300 hover:-translate-y-1"
               >
                 Apply now
                 <ExternalLink className="size-4" />
