@@ -376,9 +376,16 @@ export default function ADLPForGirls() {
 
           <Reveal delay={0.06} className="mt-14">
             <article className="group relative overflow-hidden rounded-[32px] bg-[#0b1321] p-8 text-white transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl sm:p-10 lg:flex lg:items-center lg:gap-10">
+              {/* Painted as a background gradient rather than a blurred child: a
+                  filtered element is not reliably clipped by the card's rounded
+                  corners, which leaks square pink edges past the radius. */}
               <div
                 aria-hidden
-                className="pointer-events-none absolute -right-16 -top-16 size-64 rounded-full bg-[#e0186e]/25 blur-3xl"
+                className="pointer-events-none absolute inset-0"
+                style={{
+                  background:
+                    "radial-gradient(200px circle at calc(100% - 64px) 64px, rgba(224,24,110,0.28), rgba(224,24,110,0) 100%)",
+                }}
               />
               <div className="relative flex w-full items-start justify-between gap-4 lg:w-auto lg:shrink-0 lg:items-center">
                 <span className="inline-flex size-16 items-center justify-center rounded-2xl bg-white/[0.08]">
