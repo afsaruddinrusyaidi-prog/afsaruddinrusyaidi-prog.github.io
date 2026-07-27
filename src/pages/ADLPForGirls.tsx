@@ -314,8 +314,8 @@ export default function ADLPForGirls() {
             </p>
             <p className="mt-6 max-w-2xl text-base leading-relaxed text-white/55 sm:text-[17px]">
               A fully sponsored five-day AI Startup Bootcamp where 80 female university students
-              aged 18–24 come together in KL to lead, build with AI, and turn a bold idea into a
-              real startup.
+              aged 18–24 come together to lead, build with AI, and turn a bold idea into a real
+              startup.
             </p>
           </Reveal>
 
