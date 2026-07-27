@@ -158,8 +158,13 @@ const BACKERS: { name: string; logo: string; url: string; blurb: string }[] = [
   },
 ]
 
-const LOGISTICS: { label: string; value: string; icon: Icon }[] = [
-  { label: "DATES", value: "9 to 13 September 2026 (5 days, 4 nights)", icon: CalendarDays },
+const LOGISTICS: { label: string; value: string; note?: string; icon: Icon }[] = [
+  {
+    label: "DATES",
+    value: "9 to 13 September 2026",
+    note: "(5 days, 4 nights)",
+    icon: CalendarDays,
+  },
   { label: "VENUE", value: "Perdana KLCC", icon: MapPin },
   {
     label: "COST",
@@ -607,6 +612,7 @@ export default function ADLPForGirls() {
                       </p>
                       <p className="mt-2 text-[15px] font-bold leading-relaxed text-white">
                         {item.value}
+                        {item.note ? <span className="block">{item.note}</span> : null}
                       </p>
                     </div>
                   )
