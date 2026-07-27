@@ -168,7 +168,8 @@ const LOGISTICS: { label: string; value: string; note?: string; icon: Icon }[] =
   { label: "VENUE", value: "Perdana KLCC", icon: MapPin },
   {
     label: "COST",
-    value: "Fully sponsored, including accommodation, meals, and AI tool access",
+    value: "Fully sponsored.",
+    note: "Accommodation, meals, and AI credits.",
     icon: Wallet,
   },
   {
