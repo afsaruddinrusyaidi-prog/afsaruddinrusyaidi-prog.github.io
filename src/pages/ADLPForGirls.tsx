@@ -48,7 +48,7 @@ const HERO_FACTS: {
 
 const PILLARS: { title: string; body: string; icon: Icon; accent: string }[] = [
   {
-    title: "80 women, 5 days.",
+    title: "80 female university students, 5 days.",
     body: "Spend five days learning, building, and sharing ideas with a cohort of ambitious women selected from across Malaysia.",
     icon: UsersRound,
     accent: "#f4791f",
@@ -166,7 +166,11 @@ const LOGISTICS: { label: string; value: string; icon: Icon }[] = [
     value: "Fully sponsored, including accommodation, meals, and AI tool access",
     icon: Wallet,
   },
-  { label: "ELIGIBILITY", value: "Malaysian women aged 18 to 24, by selection", icon: UsersRound },
+  {
+    label: "ELIGIBILITY",
+    value: "Malaysian female university students aged 18 to 24, by selection",
+    icon: UsersRound,
+  },
   { label: "BRING", value: "A laptop, a charger, and a problem you care about", icon: Laptop },
   {
     label: "THEMES",
@@ -179,7 +183,7 @@ const FAQS = [
   {
     question: "Who can apply?",
     answer:
-      "Malaysian women aged 18 to 24. You do not need to be studying ICT or computer science. If you are curious about building with AI and willing to work hard for five days, apply.",
+      "Malaysian female university students aged 18 to 24. You do not need to be studying ICT or computer science. If you are curious about building with AI and willing to work hard for five days, apply.",
   },
   {
     question: "Do I need coding experience or a startup idea?",
@@ -304,8 +308,9 @@ export default function ADLPForGirls() {
               <span className="whitespace-nowrap">Emerging Leaders Asia</span>
             </p>
             <p className="mt-6 max-w-2xl text-base leading-relaxed text-white/55 sm:text-[17px]">
-              A fully sponsored five-day AI Startup Bootcamp where 80 women aged 18–24 come together
-              in KL to lead, build with AI, and turn a bold idea into a real startup.
+              A fully sponsored five-day AI Startup Bootcamp where 80 female university students
+              aged 18–24 come together in KL to lead, build with AI, and turn a bold idea into a
+              real startup.
             </p>
           </Reveal>
 
@@ -370,7 +375,7 @@ export default function ADLPForGirls() {
                 aria-hidden
                 className="pointer-events-none absolute -right-16 -top-16 size-64 rounded-full bg-[#e0186e]/25 blur-3xl"
               />
-              <div className="relative flex items-center gap-4 lg:shrink-0">
+              <div className="relative flex w-full items-start justify-between gap-4 lg:w-auto lg:shrink-0 lg:items-center">
                 <span className="inline-flex size-16 items-center justify-center rounded-2xl bg-white/[0.08]">
                   <img src={CODEX_LOGO_URL} alt="" className="size-9 object-contain" />
                 </span>
