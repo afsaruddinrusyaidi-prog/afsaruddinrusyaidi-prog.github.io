@@ -20,6 +20,12 @@ const CHANNELS = [
   { label: "linktr.ee/emergingcorpleaders", href: ORG.socials.linktree, icon: "link" },
 ] as const
 
+const LEGAL_LINKS = [
+  { label: "Privacy", to: "/privacy" },
+  { label: "Cookies", to: "/cookies" },
+  { label: "Terms", to: "/terms" },
+] as const
+
 export function Footer() {
   return (
     <footer className="px-3 pb-6 sm:px-5">
@@ -174,6 +180,15 @@ export function Footer() {
               <Star className="size-3.5 text-amber" />© {new Date().getFullYear()}{" "}
               Emerging Leaders Asia. All rights reserved.
             </p>
+            <ul className="flex flex-wrap items-center gap-x-4 gap-y-2">
+              {LEGAL_LINKS.map((l) => (
+                <li key={l.to}>
+                  <Link to={l.to} className="transition-colors hover:text-amber">
+                    {l.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
             <p className="inline-flex items-center gap-2">
               Asia&apos;s Ecosystem for Emerging Leaders.
               <Star className="size-3.5 text-flame" />

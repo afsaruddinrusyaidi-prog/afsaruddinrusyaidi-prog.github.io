@@ -12,6 +12,8 @@ import Leadership from "@/pages/Leadership"
 import Media from "@/pages/Media"
 import Join from "@/pages/Join"
 import ADLPForGirls from "@/pages/ADLPForGirls"
+import Legal from "@/pages/Legal"
+import LegalDocument from "@/pages/LegalDocument"
 
 function ScrollToTop() {
   const { pathname } = useLocation()
@@ -39,6 +41,10 @@ function App() {
           <Route path="/media" element={<Media />} />
           <Route path="/join" element={<Join />} />
           <Route path="/adlp-for-girls" element={<ADLPForGirls />} />
+          <Route path="/legal" element={<Legal />} />
+          <Route path="/privacy" element={<LegalDocument slug="privacy" />} />
+          <Route path="/cookies" element={<LegalDocument slug="cookies" />} />
+          <Route path="/terms" element={<LegalDocument slug="terms" />} />
           <Route path="*" element={<Home />} />
         </Routes>
       </main>

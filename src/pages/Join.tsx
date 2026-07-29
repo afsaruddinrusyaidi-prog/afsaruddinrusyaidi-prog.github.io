@@ -1,4 +1,5 @@
 import { useState, type FormEvent } from "react"
+import { Link } from "react-router-dom"
 import { ArrowRight, Check } from "lucide-react"
 import { PageHero } from "@/components/PageHero"
 import { Reveal } from "@/components/Reveal"
@@ -198,9 +199,23 @@ export default function Join() {
                     </Field>
                   </div>
                 </div>
+                {/* Point-of-collection notice. Section 7 of the PDPA requires
+                    the notice where personal data is collected, so a footer
+                    link alone does not satisfy it. */}
+                <p className="mt-6 text-xs leading-relaxed text-muted-foreground">
+                  We use what you submit here only to respond to you. Read our{" "}
+                  <Link
+                    to="/privacy"
+                    className="font-semibold text-flame underline-offset-4 hover:underline"
+                  >
+                    Personal Data Protection Notice
+                  </Link>{" "}
+                  to see what we collect, how long we keep it, and how to ask us to correct or
+                  delete it.
+                </p>
                 <button
                   type="submit"
-                  className="mt-7 inline-flex min-h-12 w-full items-center justify-center gap-1.5 rounded-full bg-flame px-8 text-sm font-semibold text-white shadow-[0_18px_36px_-14px_rgba(240,77,26,0.6)] transition-all duration-300 hover:-translate-y-0.5 hover:brightness-105 sm:w-auto"
+                  className="mt-5 inline-flex min-h-12 w-full items-center justify-center gap-1.5 rounded-full bg-flame px-8 text-sm font-semibold text-white shadow-[0_18px_36px_-14px_rgba(240,77,26,0.6)] transition-all duration-300 hover:-translate-y-0.5 hover:brightness-105 sm:w-auto"
                 >
                   Submit application
                   <ArrowRight className="size-4" />
