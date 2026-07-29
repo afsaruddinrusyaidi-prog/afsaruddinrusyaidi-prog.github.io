@@ -618,10 +618,25 @@ export interface Article {
   excerpt: string
   author: string
   read: string
-  image: string
+  /** Omit for research pieces — the card falls back to a typographic panel. */
+  image?: string
+  /** Present once the full text exists at /insights/:slug. */
+  slug?: string
+  /** Overline shown on image-less cards. */
+  kicker?: string
 }
 
 export const LATEST_INSIGHTS: Article[] = [
+  {
+    tag: "Leadership",
+    title: "The Pathology of Credentials Fraud",
+    excerpt:
+      "Forensic investigations into executive, public sector and transnational fabrication — and the frameworks that catch what a background check misses.",
+    author: "Afsaruddin Rusyaidi",
+    read: "24 min read",
+    slug: "pathology-of-credentials-fraud",
+    kicker: "Research",
+  },
   {
     tag: "AI & Tech",
     title: "AI Co-pilot, Not Auto-pilot: Redefining Human Advantage",

@@ -1,4 +1,5 @@
-import { useMemo, useState } from "react"
+import { useMemo, useState, type ReactNode } from "react"
+import { Link } from "react-router-dom"
 import {
   ArrowRight,
   BookOpen,
@@ -37,6 +38,22 @@ const TOPIC_COLORS: Record<string, string> = {
 }
 
 const COLLECTION_ICONS = [Coffee, UsersRound, BookOpen, FileText, MessagesSquare]
+
+const CARD_CLASS =
+  "flex h-full flex-col overflow-hidden rounded-3xl border border-border bg-white shadow-sm transition-shadow duration-300 hover:shadow-md"
+
+/**
+ * Article cards become links once the full text exists at /insights/:slug.
+ * Cards without a slug stay inert rather than pointing at a 404.
+ */
+function CardShell({ slug, children }: { slug?: string; children: ReactNode }) {
+  if (!slug) return <article className={CARD_CLASS}>{children}</article>
+  return (
+    <Link to={`/insights/${slug}`} className={cn(CARD_CLASS, "hover:border-flame/30")}>
+      {children}
+    </Link>
+  )
+}
 
 /** Initials monogram — used where the board shows an author avatar. */
 function Monogram({ name, className }: { name: string; className?: string }) {
@@ -233,14 +250,27 @@ export default function Insights() {
           <div className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
             {articles.map((a, i) => (
               <Reveal key={a.title} delay={i * 0.06} className="h-full">
-                <article className="flex h-full flex-col overflow-hidden rounded-3xl border border-border bg-white shadow-sm transition-shadow duration-300 hover:shadow-md">
+                <CardShell slug={a.slug}>
                   <div className="relative aspect-[16/10]">
-                    <img
-                      src={a.image}
-                      alt={a.title}
-                      className="absolute inset-0 size-full object-cover"
-                      loading="lazy"
-                    />
+                    {a.image ? (
+                      <img
+                        src={a.image}
+                        alt={a.title}
+                        className="absolute inset-0 size-full object-cover"
+                        loading="lazy"
+                      />
+                    ) : (
+                      // Research pieces carry no photograph — a typographic
+                      // panel beats captioning an unrelated stock image.
+                      <div className="absolute inset-0 flex flex-col justify-end bg-navy p-5">
+                        <p className="text-[10px] font-extrabold uppercase tracking-[0.24em] text-amber">
+                          {a.kicker ?? "Editorial"}
+                        </p>
+                        <p className="mt-2 font-display text-sm font-bold leading-snug text-cream/70">
+                          Emerging Leaders Asia
+                        </p>
+                      </div>
+                    )}
                     <span
                       className="absolute left-3 top-3 rounded-md px-2.5 py-1 text-[10px] font-extrabold uppercase tracking-[0.1em] text-white"
                       style={{ backgroundColor: TOPIC_COLORS[a.tag] ?? "#0b1321" }}
@@ -263,7 +293,7 @@ export default function Insights() {
                       </span>
                     </div>
                   </div>
-                </article>
+                </CardShell>
               </Reveal>
             ))}
           </div>

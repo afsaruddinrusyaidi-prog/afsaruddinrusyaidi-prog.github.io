@@ -7,6 +7,7 @@ import Home from "@/pages/Home"
 import Ecosystem from "@/pages/Ecosystem"
 import Initiatives from "@/pages/Initiatives"
 import Insights from "@/pages/Insights"
+import Article from "@/pages/Article"
 import Partnerships from "@/pages/Partnerships"
 import Leadership from "@/pages/Leadership"
 import Media from "@/pages/Media"
@@ -36,6 +37,7 @@ function App() {
           <Route path="/ecosystem" element={<Ecosystem />} />
           <Route path="/initiatives" element={<Initiatives />} />
           <Route path="/insights" element={<Insights />} />
+          <Route path="/insights/:slug" element={<Article />} />
           <Route path="/partnerships" element={<Partnerships />} />
           <Route path="/leadership" element={<Leadership />} />
           <Route path="/media" element={<Media />} />
