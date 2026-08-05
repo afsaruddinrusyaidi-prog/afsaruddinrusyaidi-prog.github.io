@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react"
 import { Link, NavLink, useLocation } from "react-router-dom"
 import { AnimatePresence, motion } from "framer-motion"
-import { ArrowUpRight, Menu, Sparkles, X } from "lucide-react"
+import { ArrowUpRight, Lock, Menu, Sparkles, X } from "lucide-react"
 
 const ADLP_GRAD = "linear-gradient(100deg, #f4791f, #e0186e, #7a3fc9)"
-import { NAV_LINKS } from "@/data/content"
+import { NAV_LINKS, PORTAL_URL } from "@/data/content"
 import { cn } from "@/lib/utils"
 
 export function Navbar() {
@@ -58,6 +58,19 @@ export function Navbar() {
           </ul>
 
           <div className="flex shrink-0 items-center gap-2.5">
+            {/*
+              Member login. Deliberately the quietest thing in this bar — it is
+              for people who already belong, and it must not compete with the
+              Join CTA, which is for people who do not yet.
+            */}
+            <a
+              href={PORTAL_URL}
+              className="hidden min-h-10 items-center gap-1.5 rounded-full px-3 text-sm font-semibold text-navy/70 transition-colors hover:bg-navy/5 hover:text-navy lg:inline-flex"
+            >
+              <Lock className="size-3.5" />
+              Member Login
+            </a>
+
             {/* Special microsite pill — gradient ring, distinct from the flame CTA */}
             <Link
               to="/adlp-for-girls"
@@ -141,6 +154,16 @@ export function Navbar() {
                   Join the Network
                   <ArrowUpRight className="size-4" />
                 </Link>
+              </li>
+              <li className="mt-2 border-t border-navy/10 pt-2">
+                <a
+                  href={PORTAL_URL}
+                  className="flex min-h-12 items-center gap-2.5 rounded-2xl px-4 text-base font-medium text-navy/70"
+                >
+                  <Lock className="size-4" />
+                  Member Login
+                  <ArrowUpRight className="ml-auto size-4 opacity-50" />
+                </a>
               </li>
             </ul>
           </motion.div>

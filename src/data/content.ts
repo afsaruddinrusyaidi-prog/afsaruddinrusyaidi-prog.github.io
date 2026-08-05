@@ -16,6 +16,13 @@ export const ORG = {
   },
 } as const
 
+/**
+ * The committee and member portal. A separate application on its own subdomain,
+ * so this is a plain external href rather than a router link — a <Link> here
+ * would have React Router try to match a route that does not exist on this site.
+ */
+export const PORTAL_URL = "https://portal.emergingleadersasia.com"
+
 export const VALUES = [
   {
     title: "Radical Accountability",

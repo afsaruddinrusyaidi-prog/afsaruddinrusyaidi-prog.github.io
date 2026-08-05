@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom"
-import { ArrowRight, ArrowUpRight, Link2 } from "lucide-react"
+import { ArrowRight, ArrowUpRight, Link2, Lock } from "lucide-react"
 import { Star } from "@/components/Decor"
-import { NAV_LINKS, ORG, TRACKS } from "@/data/content"
+import { NAV_LINKS, ORG, PORTAL_URL, TRACKS } from "@/data/content"
 
 function InstagramGlyph({ className }: { className?: string }) {
   return (
@@ -133,6 +133,15 @@ export function Footer() {
                   />
                   ADLP for Girls
                 </Link>
+              </li>
+              <li>
+                <a
+                  href={PORTAL_URL}
+                  className="inline-flex items-center gap-1.5 text-sm text-white/65 transition-colors hover:text-amber"
+                >
+                  <Lock className="size-3.5" />
+                  Member Portal
+                </a>
               </li>
             </FooterColumn>
 
