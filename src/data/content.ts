@@ -633,7 +633,7 @@ export const LATEST_INSIGHTS: Article[] = [
     excerpt:
       "Forensic investigations into executive, public sector and transnational fabrication — and the frameworks that catch what a background check misses.",
     author: "Afsaruddin Rusyaidi",
-    read: "24 min read",
+    read: "5 min read",
     slug: "pathology-of-credentials-fraud",
     kicker: "Research",
   },
