@@ -18,12 +18,7 @@ import { HERO_PHOTOS, LIFE_GALLERY } from "@/data/media"
 
 // ─── Local palette maps (premium editorial pass — content stays locked) ──────
 
-const BOARD_AVATARS = [
-  "/committee/suhaila.png",
-  "/committee/ikhwan.jpg",
-  "/committee/afsar.png",
-  "/committee/sofea.jpg",
-]
+const BOARD_AVATARS = ["/committee/suhaila.png", "/committee/afsar.png"]
 
 // Hero stat strip — concept order: members → legacy → talents → events.
 const HERO_STATS = [

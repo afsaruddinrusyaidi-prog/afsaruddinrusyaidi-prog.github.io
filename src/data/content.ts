@@ -457,22 +457,10 @@ export const EXECUTIVE_BOARD: Member[] = [
     bio: "Sets the direction for the ecosystem — chairing the committee and holding the standard across every track and initiative.",
   },
   {
-    name: "Ikhwan",
-    role: "Vice President",
-    photo: "/committee/ikhwan.jpg",
-    bio: "Turns strategy into delivery — aligning departments and keeping the community engine running term after term.",
-  },
-  {
     name: "Afsaruddin",
     role: "Treasurer",
     photo: "/committee/afsar.png",
     bio: "Stewards the revenue architecture and financial governance that keeps ELA's programming sustainable.",
-  },
-  {
-    name: "Sofea",
-    role: "Secretary",
-    photo: "/committee/sofea.jpg",
-    bio: "Keeps the machine accountable — governance, records and the connective tissue between every department.",
   },
 ]
 
@@ -1004,25 +992,11 @@ export const EXEC_CARDS = [
     roleColor: "#f79433",
   },
   {
-    role: "Vice President",
-    name: "Ikhwan",
-    blurb: "Drives programmes, community growth and strategic partnerships.",
-    photo: "/committee/ikhwan.jpg",
-    roleColor: "#e0186e",
-  },
-  {
     role: "Treasurer",
     name: "Afsaruddin",
     blurb: "Oversees financial stewardship and sustainability.",
     photo: "/committee/afsar.png",
     roleColor: "#a78bfa",
-  },
-  {
-    role: "Secretary",
-    name: "Sofea",
-    blurb: "Ensures governance, documentation and internal communication.",
-    photo: "/committee/sofea.jpg",
-    roleColor: "#29a8e0",
   },
 ] as const
 

@@ -256,7 +256,7 @@ export default function Leadership() {
             Executive Board
           </h2>
         </Reveal>
-        <div className="mt-6 grid gap-5 sm:grid-cols-2 xl:grid-cols-4">
+        <div className="mt-6 grid max-w-3xl gap-5 sm:grid-cols-2">
           {EXEC_CARDS.map((m, i) => (
             <Reveal key={m.name} delay={i * 0.06} className="h-full">
               <article className="flex h-full min-h-60 flex-col rounded-3xl bg-gradient-to-br from-navy-700 to-navy p-5">
