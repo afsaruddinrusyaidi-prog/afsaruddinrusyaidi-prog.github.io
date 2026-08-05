@@ -80,6 +80,12 @@ jobs:
           # --delete keeps the server an exact mirror of dist/, so superseded
           # hashed bundles don't pile up. Scoped to the vhost's public_html.
           # Values are expanded by bash, not lftp; Actions masks secrets in logs.
+          #
+          # portal/ MUST stay excluded. Hostinger roots the
+          # portal.emergingleadersasia.com subdomain at public_html/portal, so it
+          # sits inside this mirror's target. Without the exclusion, --delete
+          # removes the entire committee portal on the first deploy that runs
+          # with FTP credentials present. See the ela-portal repo.
           lftp -c "
             set cmd:fail-exit true;
             set ftp:ssl-allow true;
@@ -88,6 +94,7 @@ jobs:
             open -u '${FTP_USER}','${FTP_PASS}' '${FTP_HOST}';
             mirror --reverse --delete --parallel=4 --verbose \
                    --exclude-glob .DS_Store \
+                   --exclude-glob portal/ \
                    dist/ '${REMOTE_DIR}';
           "
 
