@@ -27,7 +27,7 @@ import {
   VALUES,
 } from "@/data/content"
 import { cn } from "@/lib/utils"
-import { photoUrl, useCommittee } from "@/lib/committee"
+import { photoUrl, useCommittee, type DepartmentCount } from "@/lib/committee"
 
 type Icon = ComponentType<{ className?: string }>
 
@@ -69,6 +69,23 @@ function Monogram({ name, className }: { name: string; className?: string }) {
       {initials}
     </span>
   )
+}
+
+/**
+ * How full a department is, in words.
+ *
+ * A target turns the number into something a reader can judge — "4 of 7 seats
+ * filled" says the department is short-handed, where a bare "4 members" reads
+ * as complete. Without a target the open seats do the same job. A department
+ * with no seats on record yet returns null and its card simply carries no
+ * figure, which beats announcing zero.
+ */
+function seatLine(dept: DepartmentCount): string | null {
+  if (dept.filled === 0 && dept.open === 0) return null
+  if (dept.target !== null) return `${dept.filled} of ${dept.target} seats filled`
+  if (dept.open > 0) return `${dept.filled} filled · ${dept.open} open`
+
+  return dept.filled === 1 ? "1 member" : `${dept.filled} members`
 }
 
 /** One person in the grid, from either source. */
@@ -142,7 +159,7 @@ export default function Leadership() {
   const [dept, setDept] = useState("All")
   const [showAll, setShowAll] = useState(false)
 
-  const { people, numbers } = useCommittee()
+  const { people, numbers, departments: counted } = useCommittee()
 
   // Two sources, one shape. The live roster carries a slug and a consent
   // decision about the photo; the hand-written one carries neither, so its
@@ -208,17 +225,50 @@ export default function Leadership() {
     const written = LEAD_NUMBERS.map((s) => ({ ...s }))
     if (!numbers) return written
 
-    const counted = (value: number, label: string, fallback: number) =>
+    const figure = (value: number, label: string, fallback: number) =>
       value > 0 ? { value, suffix: "", label } : written[fallback]
 
     return [
-      counted(numbers.committee, "Committee members", 0),
-      counted(departments.length, "Departments", 1),
-      counted(numbers.projects, "Projects delivered", 2),
-      counted(numbers.hours, "Volunteer hours logged", 3),
+      figure(numbers.committee, "Committee members", 0),
+      // The portal's department list, not the filter's. The filter can only
+      // offer departments with somebody published in them, which is a smaller
+      // number and not the one this card is claiming to state.
+      figure(counted?.length ?? 0, "Departments", 1),
+      figure(numbers.projects, "Projects delivered", 2),
+      figure(numbers.hours, "Volunteer hours logged", 3),
       written[4],
     ]
-  }, [numbers, departments])
+  }, [numbers, counted])
+
+  /**
+   * The department cards.
+   *
+   * Driven off the portal's list, not off `content.ts`, so the set of cards is
+   * whatever the committee actually runs. Artwork is looked up by code; a
+   * department the portal reports but this site has no picture for still gets a
+   * card, because leaving it out would hide a real department behind a missing
+   * asset. When the portal cannot be reached the written cards render with no
+   * count on them at all — a card without a number is honest, a card with an
+   * invented one is not.
+   */
+  const deptCards = useMemo(() => {
+    if (!counted) {
+      return LEAD_DEPTS.map((d) => ({ ...d, title: d.name, count: null as string | null }))
+    }
+
+    return counted.map((dept) => {
+      const art = LEAD_DEPTS.find((d) => d.code === dept.code)
+
+      return {
+        code: dept.code,
+        title: dept.name,
+        body: art?.body ?? "",
+        image: art?.image ?? "/media/gallery/hero-briefing.jpg",
+        color: art?.color ?? "#4a3f8f",
+        count: seatLine(dept),
+      }
+    })
+  }, [counted])
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase()
@@ -465,9 +515,9 @@ export default function Leadership() {
             Explore departments <ArrowRight className="size-4" />
           </a>
         </Reveal>
-        <div className="mt-6 grid gap-5 sm:grid-cols-2 xl:grid-cols-4">
-          {LEAD_DEPTS.map((d, i) => (
-            <Reveal key={d.title} delay={i * 0.06} className="h-full">
+        <div className="mt-6 grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
+          {deptCards.map((d, i) => (
+            <Reveal key={d.code} delay={i * 0.06} className="h-full">
               <article className="relative flex aspect-[4/3.4] flex-col overflow-hidden rounded-3xl">
                 <img
                   src={d.image}
@@ -485,7 +535,7 @@ export default function Leadership() {
                   </span>
                   <h3 className="mt-auto font-display text-xl font-extrabold text-white">{d.title}</h3>
                   <p className="mt-1.5 text-[13px] leading-snug text-white/80">{d.body}</p>
-                  <p className="mt-3 text-xs font-bold text-white/70">{d.members}</p>
+                  {d.count && <p className="mt-3 text-xs font-bold text-white/70">{d.count}</p>}
                 </div>
               </article>
             </Reveal>

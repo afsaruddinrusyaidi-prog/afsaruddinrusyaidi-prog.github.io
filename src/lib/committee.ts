@@ -51,6 +51,22 @@ export type CommitteeNumbers = {
   openSeats: number
 }
 
+/**
+ * A department and how full it is.
+ *
+ * `code` is the stable identity — MGT, REV, PRG. Names get reworded and this
+ * page's artwork is keyed off the code so a rename does not silently drop a
+ * card. `target` is null when nobody has set a headcount target, which is not
+ * the same as a target of nought.
+ */
+export type DepartmentCount = {
+  name: string
+  code: string
+  filled: number
+  open: number
+  target: number | null
+}
+
 export type PersonDetail = {
   slug: string
   name: string
@@ -126,16 +142,22 @@ async function read<T>(path: string): Promise<T | null> {
 export async function fetchCommittee(): Promise<{
   people: RosterPerson[] | null
   numbers: CommitteeNumbers | null
+  departments: DepartmentCount[] | null
 }> {
-  const data = await read<{ people: RosterPerson[]; numbers: CommitteeNumbers }>(
-    "/api/public/committee",
-  )
+  const data = await read<{
+    people: RosterPerson[]
+    numbers: CommitteeNumbers
+    departments: DepartmentCount[]
+  }>("/api/public/committee")
 
-  if (!data) return { people: null, numbers: null }
+  if (!data) return { people: null, numbers: null, departments: null }
 
   return {
     people: Array.isArray(data.people) && data.people.length > 0 ? data.people : null,
     numbers: numbersOf(data.numbers),
+    departments: Array.isArray(data.departments) && data.departments.length > 0
+      ? data.departments
+      : null,
   }
 }
 
@@ -167,17 +189,19 @@ export async function fetchPerson(slug: string): Promise<PersonDetail | null> {
  * name has no slug, and nobody typed into a content file has consented to
  * anything. Only published people get a link.
  *
- * `numbers` arrives independently and is usually present while `people` is
- * still null.
+ * `numbers` and `departments` arrive independently and are usually present
+ * while `people` is still null — they count seats rather than describe people.
  */
 export function useCommittee(): {
   people: RosterPerson[] | null
   numbers: CommitteeNumbers | null
+  departments: DepartmentCount[] | null
 } {
   const [state, setState] = useState<{
     people: RosterPerson[] | null
     numbers: CommitteeNumbers | null
-  }>({ people: null, numbers: null })
+    departments: DepartmentCount[] | null
+  }>({ people: null, numbers: null, departments: null })
 
   useEffect(() => {
     let cancelled = false

@@ -1019,34 +1019,64 @@ export const LEAD_NUMBERS = [
   { value: 1, suffix: "", label: "Shared mission" },
 ] as const
 
+/**
+ * The department cards — artwork and copy only. No headcounts.
+ *
+ * These carried "12 Members", "11 Members" and so on as typed-in strings, and
+ * they had drifted badly: the four cards summed to 47 while the portal held 26,
+ * one card named an "Operations" department that has never existed, and the
+ * real Programme and Marketing & Comms departments were missing altogether.
+ * The seat counts now come from the portal — see `/api/public/committee`.
+ *
+ * Keyed by `code` rather than by name. Codes are what every deliverable
+ * reference is built from (REV-01, PNC-04) and they outlive rewordings, so a
+ * department that gets renamed keeps its picture instead of quietly losing it.
+ * `name` here is only the label to show if the portal cannot be reached.
+ */
 export const LEAD_DEPTS = [
   {
-    title: "Community",
-    body: "Building meaningful connections and a world-class member experience.",
-    members: "12 Members",
-    image: "/media/gallery/life-talk.jpg",
-    color: "#f4791f",
-  },
-  {
-    title: "Revenue & BD",
-    body: "Fueling growth through partnerships, revenue and strategic alliances.",
-    members: "11 Members",
-    image: "/media/gallery/init-workshop.jpg",
-    color: "#e0186e",
-  },
-  {
-    title: "People & Culture",
-    body: "Nurturing our people and strengthening a culture of belonging.",
-    members: "13 Members",
-    image: "/media/gallery/life-activity.jpg",
-    color: "#7a3fc9",
-  },
-  {
-    title: "Operations",
-    body: "Designing systems and processes that enable excellence at scale.",
-    members: "11 Members",
+    code: "MGT",
+    name: "Management",
+    body: "Governance, strategy and the office of the President.",
     image: "/media/gallery/hero-briefing.jpg",
-    color: "#2456c4",
+    color: "#29a8e0",
+  },
+  {
+    code: "REV",
+    name: "Revenue",
+    body: "Fuelling growth through partnerships, revenue and strategic alliances.",
+    image: "/media/gallery/init-workshop.jpg",
+    color: "#d6357a",
+  },
+  {
+    code: "SPS",
+    name: "Special Projects & Stakeholder Mgmt",
+    body: "Special projects, and the stakeholder relationships that carry them.",
+    image: "/media/gallery/life-talk.jpg",
+    color: "#f79433",
+  },
+  {
+    // Copy drafted, not supplied — this department had no card before.
+    code: "PRG",
+    name: "Programme",
+    body: "Designing and running every programme across the pipeline.",
+    image: "/media/gallery/init-panel.jpg",
+    color: "#3f9142",
+  },
+  {
+    // Copy drafted, not supplied — this department had no card before.
+    code: "MKT",
+    name: "Marketing & Comms",
+    body: "How the ecosystem sounds, looks and reaches the people it is for.",
+    image: "/media/gallery/hero-speaker.jpg",
+    color: "#f04d1a",
+  },
+  {
+    code: "PNC",
+    name: "People & Culture",
+    body: "Nurturing our people and strengthening a culture of belonging.",
+    image: "/media/gallery/life-activity.jpg",
+    color: "#4a3f8f",
   },
 ] as const
 
