@@ -10,6 +10,7 @@ import Insights from "@/pages/Insights"
 import Article from "@/pages/Article"
 import Partnerships from "@/pages/Partnerships"
 import Leadership from "@/pages/Leadership"
+import Person from "@/pages/Person"
 import Media from "@/pages/Media"
 import Join from "@/pages/Join"
 import ADLPForGirls from "@/pages/ADLPForGirls"
@@ -40,6 +41,7 @@ function App() {
           <Route path="/insights/:slug" element={<Article />} />
           <Route path="/partnerships" element={<Partnerships />} />
           <Route path="/leadership" element={<Leadership />} />
+          <Route path="/leadership/:slug" element={<Person />} />
           <Route path="/media" element={<Media />} />
           <Route path="/join" element={<Join />} />
           <Route path="/adlp-for-girls" element={<ADLPForGirls />} />

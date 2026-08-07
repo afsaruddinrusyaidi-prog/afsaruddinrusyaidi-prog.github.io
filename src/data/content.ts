@@ -971,10 +971,14 @@ export const PARTNER_CLOSING = {
   },
 } as const
 
-// ── Leadership — "57 leaders. One shared standard." ──────────────────────────
+// ── Leadership — "N leaders. One shared standard." ───────────────────────────
 export const LEAD_HERO = {
   kicker: "The People Behind the Ecosystem",
-  headline: ["57 leaders.", "One shared standard."],
+  // No headcount here on purpose. The number in front of "leaders." is counted
+  // off the portal when the page renders — see `headcount` in Leadership.tsx.
+  // This line read "57 leaders." and was still saying so while the portal held
+  // 26; a roster size typed into a content file cannot stay true.
+  headline: ["leaders.", "One shared standard."],
   body:
     "Every programme. Every partnership. Every conversation. Built by volunteers who believe leadership is something you practise, not inherit.",
   primary: "Meet the team",

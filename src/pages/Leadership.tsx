@@ -27,6 +27,7 @@ import {
   VALUES,
 } from "@/data/content"
 import { cn } from "@/lib/utils"
+import { photoUrl, useCommittee } from "@/lib/committee"
 
 type Icon = ComponentType<{ className?: string }>
 
@@ -70,21 +71,154 @@ function Monogram({ name, className }: { name: string; className?: string }) {
   )
 }
 
-const COMMITTEE_TOTAL = 57
+/** One person in the grid, from either source. */
+type RosterEntry = {
+  key: string
+  /** Null for hand-written names: no consent record, so no profile page. */
+  slug: string | null
+  name: string
+  role: string
+  dept: string
+  photo: boolean
+}
+
+/**
+ * A committee card.
+ *
+ * Published people get a portrait and a link to their profile. Everybody else
+ * gets a monogram and no link — the card still introduces them, which is what
+ * this page is for, but it does not imply a page that does not exist.
+ */
+function PersonCard({ person }: { person: RosterEntry }) {
+  const src = person.slug ? photoUrl({ slug: person.slug, photo: person.photo }) : null
+
+  const inner = (
+    <>
+      {src ? (
+        <img
+          src={src}
+          alt=""
+          loading="lazy"
+          className="size-12 shrink-0 rounded-full object-cover"
+        />
+      ) : (
+        <Monogram name={person.name} className="size-12 shrink-0 text-sm" />
+      )}
+      <span className="min-w-0">
+        <span className="block truncate text-sm font-bold leading-tight text-navy">
+          {person.name}
+        </span>
+        <span className="mt-0.5 block truncate text-xs leading-tight text-muted-foreground">
+          {person.role}
+        </span>
+        <span className="mt-1 block truncate text-[11px] uppercase tracking-wider text-muted-foreground/70">
+          {person.dept}
+        </span>
+      </span>
+    </>
+  )
+
+  if (!person.slug) {
+    return (
+      <div className="flex items-center gap-3 rounded-2xl border border-border bg-white p-3 shadow-sm">
+        {inner}
+      </div>
+    )
+  }
+
+  return (
+    <Link
+      to={`/leadership/${person.slug}`}
+      className="group flex items-center gap-3 rounded-2xl border border-border bg-white p-3 shadow-sm transition-colors hover:border-navy/40"
+    >
+      {inner}
+      <ArrowRight className="ml-auto size-4 shrink-0 text-muted-foreground opacity-0 transition-opacity group-hover:opacity-100" />
+    </Link>
+  )
+}
 
 export default function Leadership() {
   const [query, setQuery] = useState("")
   const [dept, setDept] = useState("All")
   const [showAll, setShowAll] = useState(false)
 
-  // Flatten the real roster (executive board included) for the search row.
-  const roster = useMemo(
-    () =>
-      DEPARTMENTS.flatMap((d) =>
-        d.members.map((m) => ({ ...m, dept: d.label })),
-      ),
-    [],
+  const { people, numbers } = useCommittee()
+
+  // Two sources, one shape. The live roster carries a slug and a consent
+  // decision about the photo; the hand-written one carries neither, so its
+  // entries get `slug: null` and render as plain cards with no link. Nobody in
+  // `content.ts` agreed to a profile page, and a card that navigates nowhere is
+  // better than one that invents a URL for them.
+  const roster = useMemo<RosterEntry[]>(() => {
+    if (people) {
+      return people.map((p) => ({
+        key: p.slug,
+        slug: p.slug,
+        name: p.name,
+        role: p.title,
+        dept: p.department ?? "Committee",
+        photo: p.photo,
+      }))
+    }
+
+    return DEPARTMENTS.flatMap((d) =>
+      d.members.map((m) => ({
+        key: `${d.label}-${m.name}`,
+        slug: null,
+        name: m.name,
+        role: m.role,
+        dept: d.label,
+        photo: false,
+      })),
+    )
+  }, [people])
+
+  // The filter offers whatever the current source actually contains, so it
+  // cannot list a department with nobody published in it.
+  const departments = useMemo(
+    () => [...new Set(roster.map((m) => m.dept))],
+    [roster],
   )
+
+  /**
+   * How many people are on the committee.
+   *
+   * Counted off filled seats in the portal, which stays true when somebody
+   * joins or leaves and is answerable even when nobody has published — a seat
+   * count says nothing about any individual. The rendered roster is the last
+   * resort. No number here is typed into a file, which is how "57" went on
+   * being displayed long after the roster it described had changed.
+   */
+  const headcount = numbers?.committee || roster.length
+
+  /**
+   * Counted figures replace the written-down ones — but only where the portal
+   * is genuinely counting something.
+   *
+   * Hours and projects come back as 0 until time has been approved and a
+   * project marked done. A zero there means "not counted yet", not "none of
+   * this happened", and "0 volunteer hours logged" across the front door would
+   * be a worse untruth than the written figure it replaced. So a zero keeps the
+   * written card and a real count takes over from it.
+   *
+   * "Shared mission" has no query behind it and never will — it is a statement,
+   * not a measurement.
+   */
+  const stats = useMemo(() => {
+    const written = LEAD_NUMBERS.map((s) => ({ ...s }))
+    if (!numbers) return written
+
+    const counted = (value: number, label: string, fallback: number) =>
+      value > 0 ? { value, suffix: "", label } : written[fallback]
+
+    return [
+      counted(numbers.committee, "Committee members", 0),
+      counted(departments.length, "Departments", 1),
+      counted(numbers.projects, "Projects delivered", 2),
+      counted(numbers.hours, "Volunteer hours logged", 3),
+      written[4],
+    ]
+  }, [numbers, departments])
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase()
@@ -96,12 +230,15 @@ export default function Leadership() {
   }, [roster, query, dept])
 
   const searching = query.trim() !== "" || dept !== "All"
-  const visible = showAll || searching ? filtered : filtered.slice(0, 9)
-  const hiddenCount = COMMITTEE_TOTAL - visible.length
+  const visible = showAll || searching ? filtered : filtered.slice(0, 12)
+
+  // Count what is actually not being shown. The old figure subtracted from a
+  // hard-coded 57, which drifts the moment somebody joins or leaves.
+  const hiddenCount = filtered.length - visible.length
 
   return (
     <>
-      {/* ══ Hero — "57 leaders. One shared standard." ══ */}
+      {/* ══ Hero — "N leaders. One shared standard.", N counted at render ══ */}
       <section className="relative overflow-hidden pt-28 sm:pt-32">
         <div className="mx-auto grid max-w-7xl items-center gap-12 px-6 sm:px-8 lg:grid-cols-[0.95fr_1.05fr] lg:gap-14">
           <Reveal>
@@ -109,7 +246,7 @@ export default function Leadership() {
               {LEAD_HERO.kicker}
             </p>
             <h1 className="mt-5 font-display text-4xl font-extrabold leading-[1.06] tracking-tight text-navy sm:text-5xl lg:text-[3.3rem]">
-              {LEAD_HERO.headline[0]}
+              {headcount} {LEAD_HERO.headline[0]}
               <br />
               One shared <span className="text-flame">standard.</span>
             </h1>
@@ -298,7 +435,7 @@ export default function Leadership() {
               <br />
               by the Numbers
             </p>
-            {LEAD_NUMBERS.map((stat, i) => {
+            {stats.map((stat, i) => {
               const IconCmp = NUMBER_ICONS[i]
               return (
                 <div key={stat.label} className={i > 0 ? "lg:border-l lg:border-border lg:pl-6" : ""}>
@@ -363,8 +500,10 @@ export default function Leadership() {
             <p className="text-xs font-extrabold uppercase tracking-[0.22em] text-[#6d28d9]">
               Meet the Committee
             </p>
+            {/* Counted, not typed. This used to read "The 57 behind" and was
+                still reading it while the portal held 26. */}
             <h2 className="mt-3 font-display text-3xl font-extrabold leading-tight tracking-tight text-navy">
-              The 57 behind
+              The {headcount} behind
               <br />
               every initiative.
             </h2>
@@ -390,8 +529,8 @@ export default function Leadership() {
                   className="h-11 rounded-full border border-border bg-white px-5 text-sm font-semibold text-navy outline-none"
                 >
                   <option>All</option>
-                  {DEPARTMENTS.map((d) => (
-                    <option key={d.id}>{d.label}</option>
+                  {departments.map((d) => (
+                    <option key={d}>{d}</option>
                   ))}
                 </select>
               </label>
@@ -409,33 +548,21 @@ export default function Leadership() {
                 No committee members match — try another name or department.
               </p>
             ) : (
-              <div className="mt-6 flex flex-wrap items-center gap-3">
+              <div className="mt-6 grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
                 {visible.map((m) => (
-                  <span
-                    key={`${m.dept}-${m.name}`}
-                    className="inline-flex items-center gap-2.5 rounded-full border border-border bg-white py-1.5 pl-1.5 pr-4 shadow-sm"
-                  >
-                    <Monogram name={m.name} className="size-9 text-xs" />
-                    <span>
-                      <span className="block text-[13px] font-bold leading-tight text-navy">
-                        {m.name}
-                      </span>
-                      <span className="block text-[11px] leading-tight text-muted-foreground">
-                        {m.role}
-                      </span>
-                    </span>
-                  </span>
+                  <PersonCard key={m.key} person={m} />
                 ))}
-                {!searching && !showAll && hiddenCount > 0 && (
-                  <button
-                    type="button"
-                    onClick={() => setShowAll(true)}
-                    className="inline-flex size-12 items-center justify-center rounded-full bg-cream-deep text-xs font-extrabold text-navy"
-                  >
-                    +{hiddenCount}
-                  </button>
-                )}
               </div>
+            )}
+
+            {!searching && !showAll && hiddenCount > 0 && (
+              <button
+                type="button"
+                onClick={() => setShowAll(true)}
+                className="mt-5 inline-flex items-center gap-1.5 rounded-full border border-border bg-white px-6 py-2.5 text-sm font-bold text-navy transition-colors hover:border-navy/40"
+              >
+                Show {hiddenCount} more <ArrowRight className="size-4" />
+              </button>
             )}
           </Reveal>
         </div>
